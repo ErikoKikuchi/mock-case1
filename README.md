@@ -5,10 +5,10 @@
 - 登録時はメール認証。  
 - 出品・購入とも可能。（ただし購入時は1購入1商品とする）  
 - いいねやコメントをつけることが可能。  
-またlaravel8から12に変更し実装を行う。  
+またlaravel12にて実装を行う。  
   
 ## 環境構築  
-- Ubuntu使用にて構築
+- Ubuntu使用にて構築  
   
 ## Dockerビルド  
 - git clone git@github.com:ErikoKikuchi/mock-case1.git  
@@ -28,6 +28,11 @@
 - php artisan migrate  
 - php artisan db:seed  
 - php artisan storage:link  
+- このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。  
+- npm install(package.jsonのあるディレクトリで作成)
+- vite.config.js で build.outDir を設定,app.jsに読み込むファイルを設定
+- npm run build
+
   
 ## テスト用には下記の通り環境構築  
 - mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  
@@ -35,7 +40,7 @@
 - cp .env .env.testingを用意（APP_ENV=test, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root）  
 - php artisan key:generate  
 - php artisan migrate --env=testing  
-- phpunit.xmlの編集（<server name="DB_CONNECTION" value="mysql_test"/>, <server name="DB_DATABASE" value="demo_test"/>）  
+- phpunit.xmlの編集（server name="DB_CONNECTION" value="mysql_test"/, server name="DB_DATABASE" value="demo_test"/）  
 - php artisan storage:link  
   
 ## 開発環境  
@@ -43,8 +48,8 @@
 - (画面フロー：初期登録→メール認証→プロフィール登録→商品一覧)  
 - ログイン画面（http://localhost/login）  
 - (画面フロー：ログイン画面→商品一覧)  
-- 商品一覧画面（http://localhost/）：未ログイン時  
-- （画面フロー：商品一覧→商品詳細→購入画面リダイレクト）  
+- 商品一覧画面（http://localhost/）：未ログイン時は商品一覧（全体）画面へ遷移、ログイン済でプロフィール未完成の場合はプロフィール編集、プロフィール完成している場合はマイページへ遷移  
+- （画面フロー：商品一覧→商品詳細→ログイン→購入画面リダイレクト）  
 - 商品一覧画面：ログイン後  
 - （画面フロー1：商品一覧→出品ボタン押下→商品の出品登録→商品一覧）  
 - （画面フロー2：商品一覧→マイページボタン押下→マイページ→出品した商品および購入した商品の確認可能、プロフィル編集ボタン押下によりプロフィール編集画面へ）  
@@ -61,4 +66,4 @@
 - nginx:1.27.5  
   
 ## ER図・データベース設計  
- ![](mock-case1.png)
+ ![](mock-case1.png)  
