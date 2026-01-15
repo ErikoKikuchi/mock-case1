@@ -6,19 +6,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Condition;
 
 class ProductController extends Controller
 {
-    public function show()
+    public function create()
     {
         $products =Product::all();
         $categories=Category::all();
-        $conditions=Condition::all();
-        return view('mypage',compact('products','categories','conditions'));
+        return view('exhibition',compact('products','categories'));
     }
     public function index(Request $request){
         $user = Auth::user();
         return view('mypage', compact('user'));
+    }
+    public function show(Product $product)
+    {
+        $products =Product::all();
+        $categories=Category::all();
+        return view('detail',compact('products','categories'));
     }
 }

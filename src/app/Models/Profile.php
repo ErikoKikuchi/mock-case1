@@ -12,6 +12,7 @@ class Profile extends Model
         'post_code',
         'address',
         'building',
+        'user_id',
     ];
 
 //他テーブルとの関係

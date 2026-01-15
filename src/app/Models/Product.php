@@ -11,8 +11,25 @@ class Product extends Model
         'image',
         'brand',
         'description',
-        'price'
+        'price',
+        'user_id',
+        'condition'
     ];
+//コンディション選択肢
+    const CONDITION_GOOD = 1;
+    const CONDITION_FINE = 2;
+    const CONDITION_FAIR = 3;
+    const CONDITION_BAD = 4;
+
+    public static function conditions()
+    {
+        return [
+            self::CONDITION_GOOD => '良好',
+            self::CONDITION_FINE => '目立った傷や汚れなし',
+            self::CONDITION_FAIR => 'やや傷や汚れあり',
+            self::CONDITION_BAD => '状態が悪い',
+        ];
+    }
 
 //他テーブルとの関係
     public function categories()
@@ -22,10 +39,6 @@ class Product extends Model
     public function likes()
     {
         return $this->belongsToMany(User::class,'likes','product_id', 'user_id')->withTimestamps();
-    }
-    public function conditions()
-    {
-        return $this->belongsTo(Condition::class);
     }
     public function users()
     {
@@ -37,7 +50,7 @@ class Product extends Model
     }
     public function purchases()
     {
-        return $this->hasMany(Purchases::class);
+        return $this->hasMany(Purchase::class);
     }
 //ロジック系
     //いいね数

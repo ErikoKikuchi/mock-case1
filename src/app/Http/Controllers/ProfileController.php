@@ -23,7 +23,7 @@ class ProfileController extends Controller
         //event(new Registered($user));
         //自動ログイン
         auth()->login($user);
-        return redirect()->intended('/');
+        return redirect()->intended(route('home'));
     }
     public function edit(){
         $user=Auth::user();

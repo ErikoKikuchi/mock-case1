@@ -34,7 +34,7 @@ class RegisterRequest extends FormRequest
                 //'.Auth::user()->email.'
                 ],
             'password'=>['required','min:8','string'],
-            'password_confirmation'=>['required','same:password'],
+            'password_confirmation'=>['required','min:8','same:password'],
         ];
     }
     public function messages()
@@ -52,6 +52,7 @@ class RegisterRequest extends FormRequest
             'password.min'=>'パスワードは８文字以上で入力してください',
             'password.string'=>'パスワードを正しく入力してください',
             'password_confirmation.required'=>'確認用パスワードを入力してください',
+            'password_confirmation.min'=>'パスワードは８文字以上で入力してください',
             'password_confirmation.same'=>'パスワードと一致しません',
         ];
     }

@@ -8,7 +8,7 @@ class Purchase extends Model
 {
     protected $fillable=[
         'buyer_user_id',
-        'product_id'
+        'product_id',
         'post_code',
         'address',
         'payment_method',
@@ -26,6 +26,6 @@ class Purchase extends Model
     }
     public function products()
     {
-        return $this->belongsTo(Product::class)
+        return $this->belongsTo(Product::class);
     }
 }

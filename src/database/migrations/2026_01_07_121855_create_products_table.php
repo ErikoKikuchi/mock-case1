@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('image');
-            $table->foreignId('conditions_id')->constrained()->restrictOnDelete();
-            $table->string('brand');
+            $table->tinyInteger('condition')->comment('1:良好 2:目立った傷や汚れなし 3:やや傷や汚れあり 4:状態が悪い');
+            $table->string('brand')->nullable();
             $table->text('description');
             $table->integer('price');
             $table->timestamps();

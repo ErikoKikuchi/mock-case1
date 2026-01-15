@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Condition;
 
 class ProductSearchController extends Controller
 {
@@ -15,7 +14,7 @@ class ProductSearchController extends Controller
     {
         if(Auth::attempt($request->only('email','password'))){
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended(route('home'));
         }
         return back()
         ->withErrors(['password' => 'ログイン情報が登録されていません'])
@@ -24,21 +23,27 @@ class ProductSearchController extends Controller
     public function show(Request $request)
     {
         $user = Auth::user();
-        //未ログインの時は全商品ページ
+        $tab = $request->query('tab');
+        //未ログインの時は全商品ページ,マイリストタブは空表示
         if(!$user){
-            $products =Product::all();
-            $categories=Category::all();
-            $conditions=Condition::all();
-            return view('index',compact('products','categories','conditions'));
+            $products = ($tab ==='mylist')
+            ? collect():Product::all();
+            return view('index',compact('products','tab'));
         }
         //ログイン済、profile未完成のときはprofile-editへ
         if(!$user->canViewProductList()){
             return redirect('/profile-edit');
         }
-        //ログイン済、profile完成済のときはmypageへ
-        $products =Product::all();
-        $categories=Category::all();
-        $conditions=Condition::all();
-        return view('index',compact('products','categories','conditions'));
+        //ログイン済、profile完成済のときは自分の出品商品以外の全商品ページへ,マイリストタブ押したらいいねした商品を表示
+        if($tab === 'mylist'){
+        $products =$user 
+            -> likes()
+            ->where('products.user_id', '!=', $user->id)
+            ->get();
+        }else{
+            $products= Product::where('user_id', '!=', $user->id)
+            ->get();
+        }
+        return view('index',compact('products','tab'));
     }
 }
