@@ -19,10 +19,10 @@ class ProductController extends Controller
         $user = Auth::user();
         return view('mypage', compact('user'));
     }
-    public function show(Product $product)
+    public function show(Product $item_id)
     {
-        $products =Product::all();
+        $item_id->loadCount(['likes','comments']);
         $categories=Category::all();
-        return view('detail',compact('products','categories'));
+        return view('detail',['product'=>$item_id,'categories'=>$categories]);
     }
 }

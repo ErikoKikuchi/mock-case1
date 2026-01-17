@@ -20,4 +20,5 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile-edit',[ProfileController::class,'edit']);
     Route::get('/sell',[ProductController::class,'create'])->name('sell');
     Route::get('/item/{item_id}',[ProductController::class,'show'])->name('item.detail');
+    Route::post('products/{product}/like', [ProductInteractionController::class, 'toggle'])->name('like.product');
 });

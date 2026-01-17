@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
     public function comments()
     {
-        return $this->belongsToMany(Product::class, 'comments', 'user_id', 'product_id');
+        return $this->hasMany(Comment::class);
     }
     public function likes()
     {
@@ -81,6 +81,13 @@ class User extends Authenticatable
     {
         $result= $this->likes()->toggle($productId);
         return !empty($result['attached']);
+    }
+    //いいねがされているか
+    public function hasLiked(int $productId): bool
+    {
+    return $this->likes()
+        ->where('product_id', $productId)
+        ->exists();
     }
     //購入したか
     public function hasPurchased(Product $product):bool

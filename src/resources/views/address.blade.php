@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('css')
-    @vite('resources/js/app.js')
-@endsection
+@vite('resources/js/app.js')
+@vite('resources/js/address.js')
 
 @section('content')
 @endsection

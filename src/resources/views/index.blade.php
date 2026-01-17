@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@push('vite')
-    @vite('resources/js/app.js')
-@endpush
+@vite('resources/js/app.js')
+@vite('resources/js/index.js')
+
 
 @section('content')
 <div class = "tab__group">
@@ -18,7 +18,7 @@
         @forelse($products as $product)
             <a class="product-card" href="{{route('item.detail',['item_id'=>$product->id])}}">
                 <div class="product-card__inner" >
-                    <img class="product__image" src="{{asset('storage/'.$product->image)}}">
+                    <img class="product__image" src="{{asset('storage/'.$product->image)}}" alt="{{$product->title}}">
                     <p class="product__title">{{ $product->title }}
                     </p>
             @if($product->isSold())

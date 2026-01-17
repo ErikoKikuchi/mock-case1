@@ -46,18 +46,13 @@ class Product extends Model
     }
     public function comments()
     {
-        return $this->belongsToMany(Comment::class,'comments', 'product_id', 'user_id')->withPivot('body')->withTimestamps();
+        return $this->hasMany(Comment::class, 'product_id');
     }
     public function purchases()
     {
         return $this->hasMany(Purchase::class);
     }
 //ロジック系
-    //いいね数
-    public function likesCount():int
-    {
-        return $this->likes()->count();
-    }
     //売り切れかどうか
     public function isSold():bool
     {

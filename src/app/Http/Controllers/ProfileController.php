@@ -7,15 +7,20 @@ use App\Http\Requests\RegisterRequest;
 use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
 {
     public function register(RegisterRequest $request){
         $user = DB::transaction(function()use ($request){
-        $user = app(CreateNewUser::class)->create($request->validated());
+        $user = User::create([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            ]);
         $user->profile()->create([
-            'name' => $request->input('name'),
+            'name' => $request->name,
         ]);
         return $user;
         });

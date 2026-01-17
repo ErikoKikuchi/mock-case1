@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@push('vite')
-    @vite('resources/js/app.js')
-@endpush
+@vite('resources/js/app.js')
+@vite('resources/js/mypage.js')
 
 @section('content')
 @endsection
