@@ -24,10 +24,11 @@ class ProductSearchController extends Controller
     {
         $user = Auth::user();
         $tab = $request->query('tab');
+        $keyword = $request->query('keyword');
         //未ログインの時は全商品ページ,マイリストタブは空表示
         if(!$user){
             $products = ($tab ==='mylist')
-            ? collect():Product::all();
+            ? collect():Product::keywordSearch($keyword)->get();
             return view('index',compact('products','tab'));
         }
         //ログイン済、profile未完成のときはprofile-editへ
@@ -39,9 +40,11 @@ class ProductSearchController extends Controller
         $products =$user 
             -> likes()
             ->where('products.user_id', '!=', $user->id)
+            ->keywordSearch($keyword)
             ->get();
         }else{
             $products= Product::where('user_id', '!=', $user->id)
+            ->keywordSearch($keyword)
             ->get();
         }
         return view('index',compact('products','tab'));

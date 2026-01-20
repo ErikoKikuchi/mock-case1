@@ -21,8 +21,9 @@ class ProductController extends Controller
     }
     public function show(Product $item_id)
     {
-        $item_id->loadCount(['likes','comments']);
-        $categories=Category::all();
-        return view('detail',['product'=>$item_id,'categories'=>$categories]);
+        $item_id->load(['categories','comments.user.profile'])
+            ->loadCount(['likes','comments']);
+
+        return view('detail',['product'=>$item_id]);
     }
 }

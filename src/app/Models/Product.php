@@ -30,6 +30,10 @@ class Product extends Model
             self::CONDITION_BAD => '状態が悪い',
         ];
     }
+    public function getConditionLabelAttribute()
+    {
+        return self::conditions()[$this->condition] ?? '不明';
+    }
 
 //他テーブルとの関係
     public function categories()
@@ -58,4 +62,12 @@ class Product extends Model
     {
         return $this->purchases()->where('status', 'completed')->exists();
     }
+//検索
+    public function scopeKeywordSearch($query,$keyword){
+        if (!empty($keyword)) {
+            $query->where('title', 'like', '%' . $keyword . '%');
+        }
+            return $query;
+    }
 }
+

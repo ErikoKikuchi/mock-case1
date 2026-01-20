@@ -13,8 +13,8 @@
                 <img class="header__logo" src="{{asset('images/COACHTECHヘッダーロゴ.png')}}" type="image" name="logo">
             </div>
             <div class="search-form">
-                <form class="search-form__inner" action="/search" method="post">@csrf
-                    <input class="search-form__input" type="text" name="title" placeholder="なにをお探しですか？"></input>
+                <form class="search-form__inner" action="{{route('home')}}" method="get">@csrf
+                    <input class="search-form__input" type="search" name="keyword" placeholder="なにをお探しですか？"value="{{ request('keyword') }}" oninput="this.form.submit()"></input>
                 </form>
             </div>
             <div class="nav">

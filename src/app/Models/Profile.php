@@ -18,7 +18,7 @@ class Profile extends Model
 //他テーブルとの関係
     public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 //ロジック系
     //必須項目が埋まっているか

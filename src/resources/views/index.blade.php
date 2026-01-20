@@ -7,10 +7,10 @@
 @section('content')
 <div class = "tab__group">
     <div class="index-tab">
-        <a class="index-tab__link" href="{{route('home')}}">おすすめ</a>
+        <a class="index-tab__link" href="{{ route('home', ['keyword' => request('keyword')]) }}">おすすめ</a>
     </div>
     <div class="mylist-tab">
-        <a class="mylist-tab__link" href="/?tab=mylist">マイリスト</a>
+        <a class="mylist-tab__link" href="{{ route('home', ['keyword' => request('keyword'), 'tab' => 'mylist']) }}">マイリスト</a>
     </div>
 </div>
 <div class = "product__content">
