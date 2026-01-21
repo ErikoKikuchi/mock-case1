@@ -9,9 +9,8 @@ class Purchase extends Model
     protected $fillable=[
         'buyer_user_id',
         'product_id',
-        'post_code',
-        'address',
         'payment_method',
+        'shipping_address_id',
         'status'
     ];
 
@@ -27,5 +26,9 @@ class Purchase extends Model
     public function products()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function shipping_addresses()
+    {
+        return $this->hasMany(ShippingAddress::class);
     }
 }

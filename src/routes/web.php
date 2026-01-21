@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function(){
     Route::post('products/{product}/like', [ProductInteractionController::class, 'toggle'])->name('like.product');
     Route::get('/purchase/{item_id}',[PurchaseController::class,'show'])->name('purchase.show');
     Route::post('/comment/{item_id}',[ProductInteractionController::class,'store'])->name('comment');
-    Route::get('/purchase/address/{item_id}',[ProfileController::class,'edit'])->name('profile.edit');
+    Route::get('/purchase/address/{item_id}',[PurchaseController::class,'edit'])->name('shipping.address.edit');
+    Route::post('/purchase',[PurchaseController::class, 'store'])->name('purchase.store');
 });
-//明日用のメモ
-ルーティングが違うので送付先情報とプロフィールは別テーブルで考えたほうが良い。ルーティングコントローラーテーブル回りを再度考える
+

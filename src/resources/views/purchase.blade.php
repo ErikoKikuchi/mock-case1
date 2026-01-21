@@ -28,11 +28,7 @@
             </div>
             <div class="selected-payment__inner" id="selected_payment_display">
                 <p class="label">支払方法</p>
-                @if($selectedPayment)
-                    {{ $selectedPayment->payment_method}}
-                @else
-                <p class ="message">支払い方法を選択してください</p>
-                @endif
+                <p>{{ $selectedPayment ?? '支払い方法を選択してください' }}</p>
             </div>
         </div>
     </div>
@@ -41,8 +37,8 @@
             <label class="payment-method__inner" for="payment__method">支払い方法</label>
             <select class="payment-method__select" name="payment_method_id" id="payment_method_select">
                 <option value="">選択してください</option>
-                <option value="convenience"{{ $selectedPayment?->value == 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
-                <option value="card" {{ $selectedPayment?->value == 'card' ? 'selected' : '' }}>カード支払い</option>
+                <option value="convenience" {{ $selectedPayment == 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
+                <option value="card" {{ $selectedPayment == 'card' ? 'selected' : '' }}>カード支払い</option>
             </select>
             <!--選択した支払方法を即時表示のためのjavascript-->
             <script>
@@ -51,7 +47,8 @@
                 const hiddenInput = document.getElementById('hidden_payment_method');
                 select.addEventListener('change', function() {
                     const selectedOption = select.options[select.selectedIndex];
-                    display.innerHTML = ` ${selectedOption.text}`;
+                    const labelHtml = '<p class="label">支払方法</p>';
+                    display.innerHTML = labelHtml + '<p>' + selectedOption.text + '</p>';
                     hiddenInput.value = selectedOption.value;
             });
             </script>
@@ -60,7 +57,7 @@
             <form id="purchase-form" method="post" action="{{ route('purchase.store') }}">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="payment_method_id" id="hidden_payment_method" value="{{ $selectedPayment->id ?? '' }}">
+                <input type="hidden" name="payment_method_id" id="hidden_payment_method" value="{{ $selectedPayment->payment_method ?? '' }}">
                 <button type="submit">購入する</button>
             </form>
         </div>
@@ -69,7 +66,7 @@
         <div class="address__information">
             <div class="label__inner">
                 <span class="label">配送先</span>
-                <a class="link" href="{{route('profile.edit')}}"></a>
+                <a class="link" href="{{route('shipping.address.edit')}}"></a>
             </div>
             <div class="address">
                 <p>{{$address->user?->profile->post_code}}</p>
