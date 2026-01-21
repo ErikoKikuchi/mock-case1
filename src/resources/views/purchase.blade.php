@@ -66,12 +66,13 @@
         <div class="address__information">
             <div class="label__inner">
                 <span class="label">配送先</span>
-                <a class="link" href="{{route('shipping.address.edit')}}"></a>
+                <a class="link" href="{{route('shipping.address.edit')}}">変更する</a>
             </div>
             <div class="address">
-                <p>{{$address->user?->profile->post_code}}</p>
-                <p>{{$address->user?->profile->address}}</p>
-                <p>{{$address->user?->profile->building}}</p>
+                <p class ="address-information">〒</p>
+                <p class ="address-information">{{$address->user?->profile->post_code}}</p>
+                <p class ="address-information">{{$address->user?->profile->address}}</p>
+                <p class ="address-information">{{$address->user?->profile->building}}</p>
             </div>
         </div>
         <div class="empty"></div>

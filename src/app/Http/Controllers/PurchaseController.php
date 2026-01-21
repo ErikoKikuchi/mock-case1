@@ -13,11 +13,12 @@ class PurchaseController extends Controller
     {
         $user=Auth::user();
         $product=$item_id;
+
         //自分の商品は変えない
         if($user->isSellerOf($product))
             {abort(403);
         }
-        $selectedPayment=null;
+
         //売り切れ
         if($product->isSold())
             {
@@ -25,15 +26,19 @@ class PurchaseController extends Controller
                 ->route('products.show',$product)
                 ->with('error','この商品は売り切れです');
             }
+            session(['purchase_item' => $product]);
+            $selectedPayment=null;
         return view('purchase', [
         'product' => $product,
         'selectedPayment' => $selectedPayment,
         'address' => $user?->profile ?? null,
     ]);
     }
-    public function edit(Request $request)
+    public function edit()
     {
-        
+        $user=Auth::user();
+        $product = session('purchase_item');
+        return view ('address',compact('user', 'product'));
     }
     public function store(Request $request)
     {
@@ -53,4 +58,18 @@ class PurchaseController extends Controller
         ]);
         return redirect()->route('mypage')->with('success','購入が完了しました');
     }
+    public function update(Request $request)
+{
+    $user = Auth::user();
+    $product = session('purchase_item');
+     $shipping = ShippingAddress::updateOrCreate(
+        ['user_id' => $user->profile->id], 
+        [
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
+            'building' => $request->building
+            ]
+     );
+    return redirect()->route('purchase.show', ['item_id' => $item->id]);
+}
 }
