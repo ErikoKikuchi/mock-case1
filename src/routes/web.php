@@ -22,9 +22,10 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile-edit',[ProfileController::class,'edit']);
     Route::get('/sell',[ProductController::class,'create'])->name('sell');
     Route::post('products/{product}/like', [ProductInteractionController::class, 'toggle'])->name('like.product');
-    Route::post('/purchase/{item_id}',[PurchaseController::class,'show'])->name('purchase.show');
+    Route::get('/purchase/{item_id}',[PurchaseController::class,'show'])->name('purchase.show');
     Route::post('/comment/{item_id}',[ProductInteractionController::class,'store'])->name('comment');
     Route::get('/purchase/address/{item_id}',[PurchaseController::class,'edit'])->name('shipping.address.edit');
     Route::post('/purchase',[PurchaseController::class, 'store'])->name('purchase.store');
+    Route::patch('/update/shipping-address/{item_id}',[PurchaseController::class, 'update'])->name('update.shipping-address');
 });
 

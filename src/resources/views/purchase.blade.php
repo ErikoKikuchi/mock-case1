@@ -66,13 +66,25 @@
         <div class="address__information">
             <div class="label__inner">
                 <span class="label">配送先</span>
-                <a class="link" href="{{route('shipping.address.edit')}}">変更する</a>
+                <a class="link" href="{{route('shipping.address.edit', ['item_id' => $product->id])}}">変更する</a>
             </div>
             <div class="address">
-                <p class ="address-information">〒</p>
-                <p class ="address-information">{{$address->user?->profile->post_code}}</p>
-                <p class ="address-information">{{$address->user?->profile->address}}</p>
-                <p class ="address-information">{{$address->user?->profile->building}}</p>
+                @if($shippingAddress)
+                    <div class="post_code">
+                        <p class ="address-information">〒</p>
+                        <p class ="address-information">{{ $shippingAddress->post_code }}</p>
+                    </div>
+                    <p class ="address-information">{{ $shippingAddress->address }}</p>
+                    <p class ="address-information">{{ $shippingAddress->building }}</p>
+                @else
+                    <div class="post_code">
+                        <p class ="address-information">〒</p>
+                        <p class ="address-information">{{ $profile->post_code}}</p>
+                    </div>
+                    <p class ="address-information">{{$profile->address}}</p>
+                    <p class ="address-information">{{$profile->building}}</p>
+                @endif
+                </p>
             </div>
         </div>
         <div class="empty"></div>

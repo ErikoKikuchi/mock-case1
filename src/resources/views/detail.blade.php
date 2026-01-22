@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="product__purchase">
-            <form class="purchase__form" action="{{route('purchase.show',$product->id)}}" method="post">@csrf
+            <form class="purchase__form" action="{{route('purchase.show',$product->id)}}" method="get">
                 <button class ="purchase__form-button" type="submit">購入手続きへ</button>
             </form>
         </div>

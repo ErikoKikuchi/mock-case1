@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
+use App\Models\ShippingAddress;
 
 class PurchaseController extends Controller
 {
-    public function show(Product $item_id)
+    public function show($item_id)
     {
         $user=Auth::user();
-        $product=$item_id;
+        $product=Product::findOrFail($item_id);
 
         //自分の商品は変えない
         if($user->isSellerOf($product))
@@ -23,21 +24,24 @@ class PurchaseController extends Controller
         if($product->isSold())
             {
                 return redirect()
-                ->route('products.show',$product)
+                ->route('home',$product)
                 ->with('error','この商品は売り切れです');
             }
-            session(['purchase_item' => $product]);
             $selectedPayment=null;
+            $profile = $user?->profile;
+             $shippingAddress = ShippingAddress::where('user_id', $user->id)->first();
+
         return view('purchase', [
         'product' => $product,
         'selectedPayment' => $selectedPayment,
-        'address' => $user?->profile ?? null,
+        'profile' => $user?->profile,
+        'shippingAddress' => $shippingAddress, 
     ]);
     }
-    public function edit()
+    public function edit($item_id)
     {
         $user=Auth::user();
-        $product = session('purchase_item');
+        $product = Product::findOrFail($item_id);
         return view ('address',compact('user', 'product'));
     }
     public function store(Request $request)
@@ -58,18 +62,20 @@ class PurchaseController extends Controller
         ]);
         return redirect()->route('mypage')->with('success','購入が完了しました');
     }
-    public function update(Request $request)
-{
+    public function update(Request $request,$item_id)
+    {
     $user = Auth::user();
-    $product = session('purchase_item');
-     $shipping = ShippingAddress::updateOrCreate(
-        ['user_id' => $user->profile->id], 
+    $product = Product::findOrFail($item_id);
+    
+    $shipping = ShippingAddress::updateOrCreate(
+        ['user_id' => $user->id, 'product_id' => $product->id], 
         [
-            'postal_code' => $request->postal_code,
+            'post_code' => $request->post_code,
             'address' => $request->address,
             'building' => $request->building
             ]
      );
-    return redirect()->route('purchase.show', ['item_id' => $item->id]);
-}
+
+    return redirect()->route('purchase.show', ['item_id' => $product->id]);
+    }
 }

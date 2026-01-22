@@ -8,6 +8,7 @@ class Purchase extends Model
 {
     protected $fillable=[
         'buyer_user_id',
+        'seller_user_id', 
         'product_id',
         'payment_method',
         'shipping_address_id',
@@ -27,8 +28,8 @@ class Purchase extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    public function shipping_addresses()
+    public function shippingAddresses()
     {
-        return $this->hasMany(ShippingAddress::class);
+        return $this->belongsTo(ShippingAddress::class);
     }
 }
