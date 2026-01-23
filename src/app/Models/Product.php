@@ -60,7 +60,7 @@ class Product extends Model
     //売り切れかどうか
     public function isSold():bool
     {
-        return $this->purchases()->where('status', 'completed')->exists();
+        return $this->purchases()->where('status','pending')->exists();
     }
 //検索
     public function scopeKeywordSearch($query,$keyword){

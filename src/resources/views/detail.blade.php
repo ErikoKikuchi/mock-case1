@@ -6,7 +6,7 @@
 @section('content')
 <article class="product-detail">
     <div class="product-image">
-        <img class="product__image" src="{{asset('storage/'.$product->image)}}" alt="{{$product->title}}">
+        <img class="product__image" src="{{Storage::url($product->image)}}" alt="{{$product->title}}">
     </div>
     <div class="product-detail__inner">
         <h1 class="product__title">{{$product->title}}</h1>
@@ -78,6 +78,11 @@
             <h3 class="new__comment">商品へのコメント</h3>
             <form class="comment__input" action="{{route('comment',$product->id)}}" method="post">@csrf
                 <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                <div class="error">
+                @foreach($errors->get('body') as $message)
+                    <p class="error-message">{{$message}}</p>
+                @endforeach
+            </div>
                 <button class="send__comment" type="submit">コメントを送信する</button>
             </form>
         </div>

@@ -33,34 +33,40 @@
         </div>
     </div>
     <div class="middle-row">
-        <div class="payment-select">
-            <label class="payment-method__inner" for="payment__method">支払い方法</label>
-            <select class="payment-method__select" name="payment_method_id" id="payment_method_select">
-                <option value="">選択してください</option>
-                <option value="convenience" {{ $selectedPayment == 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
-                <option value="card" {{ $selectedPayment == 'card' ? 'selected' : '' }}>カード支払い</option>
-            </select>
-            <!--選択した支払方法を即時表示のためのjavascript-->
-            <script>
-                const select = document.getElementById('payment_method_select');
-                const display = document.getElementById('selected_payment_display');
-                const hiddenInput = document.getElementById('hidden_payment_method');
-                select.addEventListener('change', function() {
-                    const selectedOption = select.options[select.selectedIndex];
-                    const labelHtml = '<p class="label">支払方法</p>';
-                    display.innerHTML = labelHtml + '<p>' + selectedOption.text + '</p>';
-                    hiddenInput.value = selectedOption.value;
-            });
-            </script>
-        </div>
-        <div class="purchase-button">
-            <form id="purchase-form" method="post" action="{{ route('purchase.store') }}">
-                @csrf
+        <form id="purchase-form" method="post" action="{{ route('purchase.store') }}">
+            @csrf
+            <div class="payment-select">
+                <label class="payment-method__inner" for="payment__method">支払い方法</label>
+                <select class="payment-method__select" name="payment_method" id="payment_method_select">
+                    <option value="">選択してください</option>
+                    <option value="convenience" @selected(old('payment_method', $selectedPayment) === 'convenience')>コンビニ払い</option>
+                    <option value="card" @selected(old('payment_method', $selectedPayment) === 'card')>カード支払い</option>
+                </select>
+                <div class="error">
+                    @foreach($errors->get('payment_method') as $message)
+                        <p class="error-message">{{$message}}</p>
+                    @endforeach
+                </div>
+                <!--選択した支払方法を即時表示のためのjavascript-->
+                <script>
+                    const select = document.getElementById('payment_method_select');
+                    const display = document.getElementById('selected_payment_display');
+                    const hiddenInput = document.getElementById('hidden_payment_method');
+                    select.addEventListener('change', function() {
+                        const selectedOption = select.options[select.selectedIndex];
+                        const labelHtml = '<p class="label">支払方法</p>';
+                        display.innerHTML = labelHtml + '<p>' + selectedOption.text + '</p>';
+                });
+                </script>
+            </div>
+            <div class="purchase-button">
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="payment_method_id" id="hidden_payment_method" value="{{ $selectedPayment->payment_method ?? '' }}">
-                <button type="submit">購入する</button>
-            </form>
-        </div>
+                @if(isset($shippingAddress))
+                    <input type="hidden" name="shipping_address_id" value="{{ $shippingAddress->id }}">
+                @endif
+                <button class="purchase-button__submit" type="submit">購入する</button>
+            </div>
+        </form>
     </div>
     <div class="row">
         <div class="address__information">

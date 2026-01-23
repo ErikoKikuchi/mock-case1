@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->restrictOnDelete();
             $table->foreignId('shipping_address_id')->nullable()->constrained()->restrictOnDelete();
             $table->enum('payment_method',['card','convenience']);
-            $table->enum('status',['completed',' ']);
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

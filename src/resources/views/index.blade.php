@@ -18,7 +18,7 @@
         @forelse($products as $product)
             <a class="product-card" href="{{route('item.detail',['item_id'=>$product->id])}}">
                 <div class="product-card__inner" >
-                    <img class="product__image" src="{{asset('storage/'.$product->image)}}" alt="{{$product->title}}">
+                    <img class="product__image" src="{{Storage::url($product->image)}}" alt="{{$product->title}}">
                     <p class="product__title">{{ $product->title }}
                     </p>
             @if($product->isSold())

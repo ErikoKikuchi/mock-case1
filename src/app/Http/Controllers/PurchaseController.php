@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
 use App\Models\ShippingAddress;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -27,7 +29,7 @@ class PurchaseController extends Controller
                 ->route('home',$product)
                 ->with('error','この商品は売り切れです');
             }
-            $selectedPayment=null;
+            $selectedPayment=session('selected_payment', null);
             $profile = $user?->profile;
              $shippingAddress = ShippingAddress::where('user_id', $user->id)->first();
 
@@ -44,38 +46,56 @@ class PurchaseController extends Controller
         $product = Product::findOrFail($item_id);
         return view ('address',compact('user', 'product'));
     }
-    public function store(Request $request)
+    public function store(PurchaseRequest $request)
     {
-        $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'payment_method_id' => 'required|string|in:convenience,card',
-        ]);
-
         $user = Auth::user();
+        $product = Product::findOrFail($request->product_id);
 
+        // 住所変更してたらidを検索、なければデフォルト住所から shippingaddress を新規作成
+        if ($request->filled('shipping_address_id')) {
+            $shippingAddress = ShippingAddress::where('id', $request->shipping_address_id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+        } else {
+            $profile = $user->profile;
+            $shippingAddress = ShippingAddress::create([
+                'user_id'   => $user->id,
+                'post_code' => $profile->post_code,
+                'address'   => $profile->address,
+                'building'  => $profile->building,
+            ]);
+        }
         $purchase = Purchase::create([
         'buyer_user_id' => $user->id,
-        'seller_user_id' => Product::find($request->product_id)->user_id,
-        'product_id' => $request->product_id,
-        'payment_method' => $request->payment_method_id,
-        'status' => ' ',
+        'seller_user_id' => $product->user_id,
+        'product_id' => $product->id,
+        'shipping_address_id' => $shippingAddress->id,
+        'payment_method' => $request->payment_method,
+        'status' => 'pending',
         ]);
-        return redirect()->route('mypage')->with('success','購入が完了しました');
+        if ($request->payment_method === 'card') {
+            // Stripe にリダイレクト
+            return redirect()->route('mypage');
+        } else {
+            // マイページに戻す
+            return redirect()
+            ->route('mypage')
+            ->with('message', 'コンビニでお支払いください');
+        }
     }
-    public function update(Request $request,$item_id)
+    public function create(AddressRequest $request,$item_id)
     {
-    $user = Auth::user();
-    $product = Product::findOrFail($item_id);
+        $user = Auth::user();
+        $product = Product::findOrFail($item_id);
     
-    $shipping = ShippingAddress::updateOrCreate(
+        $shipping = ShippingAddress::updateOrCreate(
         ['user_id' => $user->id, 'product_id' => $product->id], 
         [
             'post_code' => $request->post_code,
             'address' => $request->address,
             'building' => $request->building
             ]
-     );
-
-    return redirect()->route('purchase.show', ['item_id' => $product->id]);
+        );
+        return redirect()->route('purchase.show', ['item_id' => $product->id]);
     }
 }
