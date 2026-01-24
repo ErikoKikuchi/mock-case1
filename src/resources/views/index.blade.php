@@ -14,6 +14,11 @@
     </div>
 </div>
 <div class = "product__content">
+    <div class="message">
+        @if(session('error'))
+            <p class="message">{{session('error')}}</p>
+        @endif
+    </div>
     <div class ="product__list">
         @forelse($products as $product)
             <a class="product-card" href="{{route('item.detail',['item_id'=>$product->id])}}">

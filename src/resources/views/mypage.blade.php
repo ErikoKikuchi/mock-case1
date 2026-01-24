@@ -5,6 +5,11 @@
 
 @section('content')
 <div class="mypage">
+    <div class="message">
+        @if(session('message'))
+            <p class="message">{{session('message')}}</p>
+        @endif
+    </div>
     <div class="user-information">
         <div class="image">
             <img class="icon" src="{{Storage::url($profile->image)}}" alt="{{ $profile->name }}">

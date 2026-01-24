@@ -5,12 +5,17 @@
 
 @section('content')
 <div class="profile__form">
+    <div class="message">
+        @if(session('message'))
+            <p class="message">{{session('message')}}</p>
+        @endif
+    </div>
     <h1 class ="form-title">プロフィール設定</h1>
-    <form class="form__inner" action="" method="POST">
+    <form class="form__inner" action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
         @method('PATCH')@csrf
         <div class="image">
             <div class="image__inner">
-                <img class="icon" src="{{Storage::url($profile?->image)}}" id="profilePreview" alt="ユーザーアイコン">
+                <img class="icon" src="{{Storage::url($profile?->image)}}" id="profilePreview" alt="{{$profile->name}}">
                 <div class="change__button">
                     <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/jpg">
                     <button type="button" id="selectImageButton">画像を選択する</button>
@@ -55,7 +60,7 @@
         </div>
         <div class="name">
             <label class="form-label" for="post_code">ユーザー名</label>
-            <input type="text" name="name" id="name" value=">{{$profile->name}}">
+            <input type="text" name="name" id="name" value="{{$profile->name}}">
             <div class="error">
                 @foreach($errors->get('name') as $message)
                     <p class="error-message">{{$message}}</p>
@@ -64,7 +69,7 @@
         </div>
         <div class="post_code">
             <label class="form-label" for="post_code">郵便番号</label>
-            <input type="text" name="post_code" id="post_code" value=">{{$profile->post_code}}">
+            <input type="text" name="post_code" id="post_code" value="{{$profile->post_code}}">
             <div class="error">
                 @foreach($errors->get('post_code') as $message)
                     <p class="error-message">{{$message}}</p>
@@ -73,7 +78,7 @@
         </div>
         <div class="address">
             <label class="form-label" for="address">住所</label>
-            <input type="text" name="address" id="address" value=">{{$profile->address}}">
+            <input type="text" name="address" id="address" value="{{$profile->address}}">
             <div class="error">
                 @foreach($errors->get('address') as $message)
                     <p class="error-message">{{$message}}</p>
@@ -82,7 +87,7 @@
         </div>
         <div class="building">
             <label class="form-label" for="building">建物名</label>
-            <input type="text" name="building" id="building" value=">{{$profile->building}}">
+            <input type="text" name="building" id="building" value="{{$profile->building}}">
             <div class="error">
                 @foreach($errors->get('building') as $message)
                     <p class="error-message">{{$message}}</p>
