@@ -1,3 +1,122 @@
-*{
-    margin:10px;
+.container{
+    max-width: 1320px;
+    margin:20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.message-box{
+    background-color: rgba(30, 190, 0, 0.7);
+    display: flex;
+    align-items: center;
+    padding:10px 50px;
+}
+.message{
+    color: white;
+    font-weight: bold;
+}
+.profile__form{
+    max-width: 680px;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.form-title{
+    font-size: 32px;
+    font-weight: bold;
+}
+.form__inner{
+    width:100%;
+}
+.image__inner{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap:50px;
+    margin:30px auto 10px;
+}
+.current-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height:150px;
+}
+.icon{
+    background-color:#d9d9d9 ;
+    height:150px;
+    width: 150px;
+    border-radius:50%;
+    display:block;
+    object-fit:cover;
+    text-align: center;
+}
+.file-input{
+    display: none;
+}
+.image-label{
+    border:1px solid #ff5555;
+    color:#ff5555;
+    padding:10px 20px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;   /* ← 改行させない（崩れ防止） */
+    cursor: pointer;
+    height: 40px;
+}
+.error-message{
+    color:red;
+}
+.name,
+.post_code,
+.address,
+.building{
+    width:100%;
+    margin:40px auto 10px;
+}
+.input-box{
+    border: 1px solid #5F5F5F;
+    height:60px;
+    width:100%;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    font-size: 16px;
+}
+.form-label{
+    font-size: 24px;
+    font-weight: bold;
+}
+.button{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    margin-top:50px;
+    justify-content: center;
+}
+.update-button{
+    background-color: rgb(255, 85, 85);
+    color:white;
+    height:60px;
+    font-size: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+@media(max-width: 850px){
+.profile__form{
+    max-width: 100%;
+    padding: 0 16px;
+}
+.input-box{
+    height: 56px;
+}
+}
+@media(max-width:768px){
+.image__inner{
+    flex-direction: column;
+}
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Profile;
+use App\Http\Requests\ExhibitionRequest;
 
 class ProductController extends Controller
 {
@@ -39,5 +40,29 @@ class ProductController extends Controller
             ->loadCount(['likes','comments']);
 
         return view('detail',['product'=>$item_id]);
+    }
+    public function store(ExhibitionRequest $request)
+    {
+        $user = auth()->user();
+
+        $data=[
+            'title' =>$request->title,
+            'image' =>$request->image,
+            'brand' =>$request->brand,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'user_id'=>$user->id,
+            'condition'=>$request->condition
+        ];
+
+        if( $request->file('image')){
+            $originalName=$request->file('image')->getClientOriginalName(); 
+            $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
+            }
+            $user->products()->create($data);
+
+        return redirect()
+            ->route('mypage')
+            ->with('message', '出品登録が完了しました');
     }
 }

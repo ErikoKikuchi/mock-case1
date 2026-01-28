@@ -33,7 +33,7 @@ class ProductSearchController extends Controller
         }
         //ログイン済、profile未完成のときはprofile-editへ
         if(!$user->canViewProductList()){
-            return redirect()->route('profile-edit');
+            return redirect()->route('profile.edit');
         }
         //ログイン済、profile完成済のときは自分の出品商品以外の全商品ページへ,マイリストタブ押したらいいねした商品を表示
         if($tab === 'mylist'){

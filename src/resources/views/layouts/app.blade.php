@@ -9,9 +9,9 @@
 <body>
     <header class="header">
         <div class="header__inner">
-            <div class="header__title">
+            <a class="header__title" href="{{route('home')}}">
                 <img class="header__logo" src="{{asset('images/COACHTECHヘッダーロゴ.png')}}" type="image" name="logo">
-            </div>
+            </a>
             <div class="search-form">
                 <form class="search-form__inner" action="{{route('home')}}" method="get">@csrf
                     <input class="search-form__input" type="search" name="keyword" placeholder="なにをお探しですか？"value="{{ request('keyword') }}" ></input>
@@ -38,7 +38,7 @@
             </div>
         </div>
     </header>
-    <main>
+    <main class="main">
         @yield('content')
     </main>
 </body>

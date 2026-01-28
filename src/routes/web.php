@@ -28,5 +28,6 @@ Route::middleware('auth')->group(function(){
     Route::post('/purchase',[PurchaseController::class, 'store'])->name('purchase.store');
     Route::patch('/create/shipping-address/{item_id}',[PurchaseController::class, 'create'])->name('create.shipping-address');
     Route::patch('/update/profile',[ProfileController::class,'update'])->name('profile.update');
+    Route::post('/exhibition',[ProductController::class,'store'])->name('exhibition.store');
 });
 

@@ -33,7 +33,7 @@
 - sudo apt-get install -y nodejs  
 - npm install(package.jsonのあるディレクトリで作成)
 - vite.config.js で build.outDir を設定,app.jsに読み込むファイルを設定
-- npm run build
+- npm run dev(開発環境のため)
 
   
 ## テスト用には下記の通り環境構築  

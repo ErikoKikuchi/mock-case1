@@ -32,25 +32,23 @@ class ProfileController extends Controller
         return redirect()->intended(route('home'));
     }
     public function edit(){
-        $user=Auth::user();
-        $profile=$user->profile;
+        $profile=auth()->user()->profile;
         return view('profile-edit',compact('profile'));
     } 
     public function update(ProfileRequest $request)
     {
         $user=Auth::user();
-        $data =[
-            'name'=>$request->name,
-            'post_code'=>$request->post_code,
-            'address'=>$request->address,
-            'building'=>$request->building,
-        ];
+        $data =$request->only([
+            'name','post_code','address','building']);
 
          if( $request->file('image')){
             $originalName=$request->file('image')->getClientOriginalName(); 
             $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
             }
-            $user->profile->update($data);
+            $user->profile()->updateOrCreate(
+                ['user_id' => $user->id],
+                $data
+            );
 
         return redirect()->route('profile.edit')->with('message','プロフィール変更が完了しました');
     }
