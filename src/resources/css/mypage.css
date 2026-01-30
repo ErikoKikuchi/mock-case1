@@ -1,0 +1,124 @@
+.mypage{
+    max-width: 1320px;
+    margin:0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.message-box{
+    background-color: rgba(30, 190, 0, 0.7);
+    display: flex;
+    align-items: center;
+    padding:10px 50px;
+}
+.message{
+    color: white;
+    font-weight: bold;
+}
+.user-information{
+    display: flex;
+    align-items: center;
+    gap:50px;
+    margin:30px 10px 10px;
+    width: 60%;
+    justify-content: space-between;
+}
+.profille-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height:150px;
+}
+.icon{
+    background-color:#d9d9d9 ;
+    height:150px;
+    width: 150px;
+    border-radius:50%;
+    display:block;
+    object-fit:cover;
+    text-align: center;
+    flex:1;
+}
+.name{
+    font-size: 32px;
+    font-weight: bold;
+    flex:1;
+}
+.profile-edit__button{
+    border:1px solid #ff5555;
+    color:#ff5555;
+    padding:10px 20px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    cursor: pointer;
+    height: 40px;
+    flex:2;
+}
+.tab__group{
+    display: flex;
+    gap:100px;
+    padding:40px 10px 10px 50px;
+    border-bottom: 1px solid black;
+    width:100%;
+}
+.mypage__link{
+    font-size: 24px;
+    color: black;
+}
+.mypage-tab.active .mypage__link{
+    color: rgb(255, 85, 85);
+    font-size: 24px;
+    font-weight: bold;
+}
+.mypage-container{
+    display: grid;
+    grid-template-columns: repeat(4,minmax(250px,1fr));
+    padding:40px 10px;
+    gap:30px;
+}
+.product-card__inner{
+    position: relative;
+}
+.image{
+    width:100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+.product__image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+.product__title{
+    font-size: 24px;
+    font-weight: bold;
+}
+@media (max-width: 1200px){
+.mypage-container{
+    grid-template-columns: repeat(3, minmax(250px,1fr));
+    }
+.user-information{
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+}
+}
+@media(max-width: 850px){
+.mypage-container{
+    grid-template-columns: repeat(2,minmax(250px,1fr));
+    padding:10px 10px;
+    gap:10px;
+}
+
+}
+@media(max-width: 600px){
+.mypage-container{
+    grid-template-columns:1fr;
+    padding:10px 10px;
+    gap:10px;
+    }
+}

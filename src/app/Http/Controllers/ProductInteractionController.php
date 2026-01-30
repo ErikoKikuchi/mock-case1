@@ -20,7 +20,7 @@ class ProductInteractionController extends Controller
     public function store(CommentRequest $request,Product $item_id)
     {
         Comment::create([
-            'body'=>$request->comment,
+            'body'=>$request->body,
             'user_id'=>Auth::id(),
             'product_id'=>$item_id->id,
             ]);

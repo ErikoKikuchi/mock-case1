@@ -64,7 +64,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;   /* ← 改行させない（崩れ防止） */
+    white-space: nowrap;
     cursor: pointer;
     height: 40px;
 }

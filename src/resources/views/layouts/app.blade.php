@@ -30,7 +30,7 @@
                 </div>
                 @endauth
                 <div class="mypage">
-                    <a href="{{ route('mypage',) }}" class="mypage__link">マイページ</a>
+                    <a href="{{ route('mypage') }}" class="mypage__header-link">マイページ</a>
                 </div>
                 <div class="exhibition-page">
                     <a href="{{route('sell')}}" class="exhibition-page__link">出品</a>

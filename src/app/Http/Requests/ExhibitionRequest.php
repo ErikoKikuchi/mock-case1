@@ -21,12 +21,9 @@ class ExhibitionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $imageRule = $this->isMethod('patch')
-            ? ['nullable', 'file', 'image', 'mimes:jpeg,jpg,png','max:10240', ]
-            : ['required', 'file', 'image', 'mimes:jpeg,jpg,png','max:10240', ];
         return [
             'title' =>['required','string'],
-            'image' =>$imageRule,
+            'image' =>['required', 'file', 'image', 'mimes:jpeg,jpg,png','max:10240'],
             'brand' =>['nullable','string'],
             'description'=>['required','string','max:255'],
             'price'=>['required','numeric','min:0'],

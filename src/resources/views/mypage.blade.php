@@ -5,13 +5,13 @@
 
 @section('content')
 <div class="mypage">
-    <div class="message">
-        @if(session('message'))
+    @if(session('message'))
+        <div class="message-box">
             <p class="message">{{session('message')}}</p>
-        @endif
-    </div>
+        </div>
+    @endif
     <div class="user-information">
-        <div class="image">
+        <div class="profile-image">
             <img class="icon" src="{{Storage::url($profile->image)}}" alt="{{ $profile->name }}">
         </div>
         <div class="name">
@@ -24,18 +24,20 @@
         </div>
     </div>
     <div class = "tab__group">
-        <div class="maypage-tab">
-            <a class="maypage__link" href="{{ route('mypage',['tab' => 'isSellerOf']) }}">出品した商品</a>
+        <div class="mypage-tab {{ request('tab', 'isSellerOf') === 'isSellerOf' ? 'active' : '' }}">
+            <a class="mypage__link" href="{{ route('mypage',['tab' => 'isSellerOf']) }}">出品した商品</a>
         </div>
-        <div class="mypage-tab">
+        <div class="mypage-tab {{ request('tab') === 'hasPurchased' ? 'active' : '' }}">
             <a class="mypage__link" href="{{ route('mypage', ['tab' => 'hasPurchased']) }}">購入した商品</a>
         </div>
     </div>
-    <div class="maypage-container">
+    <div class="mypage-container">
         @foreach($products as $product)
             <a class="product-card" href="{{route('mypage',['item_id'=>$product->id])}}">
                 <div class="product-card__inner" >
-                    <img class="product__image" src="{{Storage::url($product->image)}}" alt="{{$product->title}}">
+                    <div class="image">
+                        <img class="product__image" src="{{Storage::url($product->image)}}" alt="{{$product->title}}">
+                    </div>
                     <p class="product__title">{{ $product->title }}
                     </p>
                 </div>
