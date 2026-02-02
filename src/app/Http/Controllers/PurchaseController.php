@@ -18,20 +18,22 @@ class PurchaseController extends Controller
         $product=Product::findOrFail($item_id);
 
         //自分の商品は変えない
-        if($user->isSellerOf($product))
-            {abort(403);
-        }
+        if ($user->isSellerOf($product)) {
+        return redirect()
+        ->route('home')
+        ->with('message', 'ご自分の商品は購入できません');
+}
 
         //売り切れ
         if($product->isSold())
             {
                 return redirect()
                 ->route('home',$product)
-                ->with('error','この商品は売り切れです');
+                ->with('message','この商品は売り切れです');
             }
             $selectedPayment=session('selected_payment', null);
             $profile = $user?->profile;
-             $shippingAddress = ShippingAddress::where('user_id', $user->id)->first();
+            $shippingAddress = ShippingAddress::where('user_id', $user->id)->first();
 
         return view('purchase', [
         'product' => $product,

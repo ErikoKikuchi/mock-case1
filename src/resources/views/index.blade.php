@@ -15,10 +15,10 @@
         </div>
     </div>
     <div class = "product__content">
-        @if(session('error'))
-            <div class="message">
-                <p class="error-message">{{session('error')}}</p>
-            </div>
+        @if(session('message'))
+        <div class="message-box">
+            <p class="message">{{session('message')}}</p>
+        </div>
         @endif
         <div class ="product__list">
             @forelse($products as $product)

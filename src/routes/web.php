@@ -19,7 +19,7 @@ Route::middleware('guest')->group(function(){
 
 Route::middleware('auth')->group(function(){
     Route::get('/mypage',[ProductController::class,'index'])->name('mypage');
-    Route::get('/profile-edit',[ProfileController::class,'edit'])->name('profile.edit');
+    Route::get('/mypage/profile',[ProfileController::class,'edit'])->name('profile.edit');
     Route::get('/sell',[ProductController::class,'create'])->name('sell');
     Route::post('products/{product}/like', [ProductInteractionController::class, 'toggle'])->name('like.product');
     Route::get('/purchase/{item_id}',[PurchaseController::class,'show'])->name('purchase.show');

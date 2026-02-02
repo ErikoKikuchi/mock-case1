@@ -28,8 +28,8 @@ class ProductController extends Controller
         // 購入した商品のみ取得、productテーブルと結合してまとめて取得
             $products = Product::whereIn('id', function($query)use ($user) {
             $query->select('product_id')
-                  ->from('purchases')
-                  ->where('buyer_user_id', $user->id);
+                ->from('purchases')
+                ->where('buyer_user_id', $user->id);
             })->get();
         }
     return view('mypage', compact('profile','products', 'tab'));

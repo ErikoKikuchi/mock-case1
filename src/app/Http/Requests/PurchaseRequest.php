@@ -30,7 +30,7 @@ class PurchaseRequest extends FormRequest
     public function messages()
     {
         return [
-        'payment_method_id.required'=>'支払方法を入力してください'
+        'payment_method.required'=>'支払方法を入力してください'
         ];
     }
 }

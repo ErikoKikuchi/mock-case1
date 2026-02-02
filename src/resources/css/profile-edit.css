@@ -115,7 +115,7 @@
     height: 56px;
 }
 }
-@media(max-width:768px){
+@media(max-width:767px){
 .image__inner{
     flex-direction: column;
 }

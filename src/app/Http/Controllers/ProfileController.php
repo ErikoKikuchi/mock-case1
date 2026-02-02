@@ -41,7 +41,7 @@ class ProfileController extends Controller
         $data =$request->only([
             'name','post_code','address','building']);
 
-         if( $request->file('image')){
+        if( $request->file('image')){
             $originalName=$request->file('image')->getClientOriginalName(); 
             $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
             }

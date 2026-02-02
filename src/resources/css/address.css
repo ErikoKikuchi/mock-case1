@@ -1,0 +1,69 @@
+.container{
+    max-width: 1320px;
+    margin:20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.shipping-address__form{
+    max-width: 680px;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.form-title{
+    font-size: 32px;
+    font-weight: bold;
+}
+.form__inner{
+    width:100%;
+}
+.error-message{
+    color:red;
+}
+.post_code,
+.address,
+.building{
+    width:100%;
+    margin:40px auto 10px;
+}
+.input-box{
+    border: 1px solid #5F5F5F;
+    height:60px;
+    width:100%;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    font-size: 16px;
+}
+.form-label{
+    font-size: 24px;
+    font-weight: bold;
+}
+.button{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    margin-top:50px;
+    justify-content: center;
+}
+.update-button{
+    background-color: rgb(255, 85, 85);
+    color:white;
+    height:60px;
+    font-size: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+@media(max-width: 850px){
+.shipping-address__form{
+    max-width: 100%;
+    padding: 0 16px;
+}
+.input-box{
+    height: 56px;
+}
+}
