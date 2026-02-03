@@ -51,7 +51,7 @@
                 </div>
                 <div class="purchase-button">
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    @if(isset($shippingAddress))
+                    @if($shippingAddress)
                         <input type="hidden" name="shipping_address_id" value="{{ $shippingAddress->id }}">
                     @endif
                     <button class="purchase-button__submit" type="submit">購入する</button>

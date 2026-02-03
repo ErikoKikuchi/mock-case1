@@ -12,7 +12,7 @@ use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
-    public function show($item_id)
+    public function show(Request $request,$item_id)
     {
         $user=Auth::user();
         $product=Product::findOrFail($item_id);
@@ -22,7 +22,7 @@ class PurchaseController extends Controller
         return redirect()
         ->route('home')
         ->with('message', 'ご自分の商品は購入できません');
-}
+    }
 
         //売り切れ
         if($product->isSold())
@@ -31,9 +31,14 @@ class PurchaseController extends Controller
                 ->route('home',$product)
                 ->with('message','この商品は売り切れです');
             }
-            $selectedPayment=session('selected_payment', null);
-            $profile = $user?->profile;
-            $shippingAddress = ShippingAddress::where('user_id', $user->id)->first();
+        $selectedPayment=session('selected_payment', null);
+        $profile = $user?->profile;
+        $shippingAddress = null;
+        if ($request->filled('shipping_address_id')) {
+            $shippingAddress = ShippingAddress::where('id', $request->shipping_address_id)
+            ->where('user_id', $user->id)
+            ->first();
+        }
 
         return view('purchase', [
         'product' => $product,
@@ -53,20 +58,29 @@ class PurchaseController extends Controller
         $user = Auth::user();
         $product = Product::findOrFail($request->product_id);
 
-        // 住所変更してたらidを検索、なければデフォルト住所から shippingaddress を新規作成
+        // 今回の購入に使う住所データを決める（元データ）
         if ($request->filled('shipping_address_id')) {
-            $shippingAddress = ShippingAddress::where('id', $request->shipping_address_id)
+            $base =ShippingAddress::where('id', $request->shipping_address_id)
             ->where('user_id', $user->id)
             ->firstOrFail();
+            $postCode = $base->post_code;
+            $address  = $base->address;
+            $building = $base->building;
         } else {
             $profile = $user->profile;
-            $shippingAddress = ShippingAddress::create([
-                'user_id'   => $user->id,
-                'post_code' => $profile->post_code,
-                'address'   => $profile->address,
-                'building'  => $profile->building,
-            ]);
+            $post_code = $profile->post_code;
+            $address   = $profile->address;
+            $building  = $profile->building;
         }
+        //ShippingAddress を作る
+        $shippingAddress = ShippingAddress::create([
+            'user_id'   => $user->id,
+            'product_id'=> $product->id, 
+            'post_code' => $postCode,
+            'address'   => $address,
+            'building'  => $building,
+        ]);
+        //purchases に紐づける
         $purchase = Purchase::create([
         'buyer_user_id' => $user->id,
         'seller_user_id' => $product->user_id,
@@ -77,11 +91,11 @@ class PurchaseController extends Controller
         ]);
         if ($request->payment_method === 'card') {
             // Stripe にリダイレクト
-            return redirect()->route('mypage');
+            return redirect()->route('home');
         } else {
-            // マイページに戻す
+            // 一覧に戻す
             return redirect()
-            ->route('mypage')
+            ->route('home')
             ->with('message', 'コンビニでお支払いください');
         }
     }
@@ -89,7 +103,7 @@ class PurchaseController extends Controller
     {
         $user = Auth::user();
         $product = Product::findOrFail($item_id);
-    
+
         $shipping = ShippingAddress::updateOrCreate(
         ['user_id' => $user->id, 'product_id' => $product->id], 
         [
@@ -98,6 +112,9 @@ class PurchaseController extends Controller
             'building' => $request->building
             ]
         );
-        return redirect()->route('purchase.show', ['item_id' => $product->id]);
+        return redirect()->route('purchase.show', [
+            'item_id' => $product->id,
+            'shipping_address_id' => $shipping->id,
+            ]);
     }
 }
