@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
+    use HasFactory;
+
     protected $fillable=[
         'name',
         'image',
@@ -16,7 +19,7 @@ class Profile extends Model
     ];
 
 //他テーブルとの関係
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

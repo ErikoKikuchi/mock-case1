@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@vite('resources/js/app.js')
-@vite('resources/js/purchase.js')
+@section('css')
+    @if(!app()->environment('testing'))
+        @vite('resources/js/purchase.js')
+    @endif
+@endsection
 
 @section('content')
 <div class="container">

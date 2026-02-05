@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COACHTECH</title>
-    @vite('resources/js/login.js')
+    @if(!app()->environment('testing'))
+        @vite('resources/js/login.js')
+    @endif
 </head>
 <body>
     <header class="header">

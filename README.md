@@ -28,10 +28,10 @@
 - php artisan migrate  
 - php artisan db:seed  
 - php artisan storage:link  
-- このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。
+- このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。Node.js / npm のインストールおよび `npm install` はホスト環境で行ってください。(package.jsonはsrcディレクトリにあります。)
 - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 - sudo apt-get install -y nodejs  
-- npm install(package.jsonのあるディレクトリで作成)
+- npm install
 - vite.config.js で build.outDir を設定,app.jsに読み込むファイルを設定
 - npm run dev(開発環境のため)
 
@@ -44,6 +44,8 @@
 - php artisan migrate --env=testing  
 - phpunit.xmlの編集（server name="DB_CONNECTION" value="mysql_test"/, server name="DB_DATABASE" value="demo_test"/）  
 - php artisan storage:link  
+- このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。
+
   
 ## 開発環境  
 - 初期登録画面（http://localhost/register）  

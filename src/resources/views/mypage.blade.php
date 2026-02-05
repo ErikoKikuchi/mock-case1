@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@vite('resources/js/app.js')
-@vite('resources/js/mypage.js')
+@section('css')
+    @if(!app()->environment('testing'))
+        @vite('resources/js/mypage.js')
+    @endif
+@endsection
 
 @section('content')
 <div class="mypage">

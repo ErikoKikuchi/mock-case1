@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $fillable=[
         'title',
         'image',
@@ -44,7 +47,7 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class,'likes','product_id', 'user_id')->withTimestamps();
     }
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
