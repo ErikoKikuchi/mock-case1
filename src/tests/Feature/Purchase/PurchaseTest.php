@@ -43,9 +43,48 @@ class PurchaseTest extends TestCase
     }
 
 //購入した商品は商品一覧画面にて「sold」と表示される
+    public function test_purchase_product_has_sold_label_at_index()
+    {
+        $seller = User::factory()->create();
+        $product = Product::factory()->for($seller)->create();
 
+        $buyer = User::factory()->create();
+        $profile =Profile::factory()->for($buyer)->create();
+
+        $this->assertDatabaseCount('purchases', 0);
+
+        $response = $this->actingAs($buyer)->post(route('purchase.store'), [
+            'payment_method' => 'card',
+            'product_id' => $product->id]);
+
+        $response->assertRedirect(route('home'));
+
+        $response = $this->get(route('home'));
+        $response->assertOk();
+
+        $response->assertSee('SOLD');
+    }
 
 //「プロフィール/購入した商品一覧」に追加されている
+    public function test_purchase_product_can_see_at_mypage_has_purchased_tab()
+    {
+        $seller = User::factory()->create();
+        $product = Product::factory()->for($seller)->create(['title'=>'テスト商品']);
 
+        $buyer = User::factory()->create();
+        $profile =Profile::factory()->for($buyer)->create();
 
+        $this->assertDatabaseCount('purchases', 0);
+
+        $response = $this->actingAs($buyer)->post(route('purchase.store'), [
+            'payment_method' => 'card',
+            'product_id' => $product->id]);
+
+        $response->assertRedirect(route('home'));
+
+        $response = $this->actingAs($buyer)->get(route('mypage', ['tab' => 'hasPurchased']));
+        $response->assertOk();
+
+        $response->assertSee('テスト商品');
+    }
 }
