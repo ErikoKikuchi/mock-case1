@@ -38,9 +38,11 @@
                     </div>
                 </a>
             @empty
-                @if($tab === 'mylist')
-                    <p>マイリストに商品はありません</p>
-                @endif
+                @auth
+                    @if($tab === 'mylist')
+                        <p>マイリストに商品はありません</p>
+                    @endif
+                @endauth
             @endforelse
         </div>
     </div>

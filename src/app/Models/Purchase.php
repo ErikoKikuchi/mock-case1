@@ -15,6 +15,9 @@ class Purchase extends Model
         'product_id',
         'payment_method',
         'shipping_address_id',
+        'shipping_post_code',
+        'shipping_address',
+        'shipping_building',
         'status'
     ];
 

@@ -57,35 +57,33 @@ class PurchaseController extends Controller
     {
         $user = Auth::user();
         $product = Product::findOrFail($request->product_id);
+        $baseId = null;
 
-        // 今回の購入に使う住所データを決める（元データ）
+        // 今回の購入に使う住所データ
         if ($request->filled('shipping_address_id')) {
             $base =ShippingAddress::where('id', $request->shipping_address_id)
             ->where('user_id', $user->id)
             ->firstOrFail();
+            $baseId = $base->id;
             $postCode = $base->post_code;
             $address  = $base->address;
             $building = $base->building;
         } else {
             $profile = $user->profile;
-            $post_code = $profile->post_code;
+            $postCode = $profile->post_code;
             $address   = $profile->address;
             $building  = $profile->building;
         }
-        //ShippingAddress を作る
-        $shippingAddress = ShippingAddress::create([
-            'user_id'   => $user->id,
-            'product_id'=> $product->id, 
-            'post_code' => $postCode,
-            'address'   => $address,
-            'building'  => $building,
-        ]);
+
         //purchases に紐づける
         $purchase = Purchase::create([
         'buyer_user_id' => $user->id,
         'seller_user_id' => $product->user_id,
         'product_id' => $product->id,
-        'shipping_address_id' => $shippingAddress->id,
+        'shipping_address_id' => $baseId,
+        'shipping_post_code' => $postCode,
+        'shipping_address' => $address,
+        'shipping_building' => $building,
         'payment_method' => $request->payment_method,
         'status' => 'pending',
         ]);

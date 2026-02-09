@@ -54,12 +54,7 @@ class IndexTest extends TestCase
     public function test_logged_in_user_does_not_see_own_products()
     {
         $user = User::factory()->create();
-        Profile::factory()->create([
-        'user_id' => $user->id,
-        'name' => 'テストユーザー',
-        'post_code' => '1234567',
-        'address' => '東京都渋谷区',
-        ]);
+        Profile::factory()->for($user)->create();
         Product::factory()->for($user)->create(['title' => '自分の商品']);
 
         $other = User::factory()->create();

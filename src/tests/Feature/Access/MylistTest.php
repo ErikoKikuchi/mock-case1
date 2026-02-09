@@ -3,7 +3,6 @@
 namespace Tests\Feature\Access;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Like;
@@ -20,18 +19,8 @@ class MylistTest extends TestCase
             $owner = User::factory()->create();
             $seller = User::factory()->create();
 
-            Profile::factory()->for($owner)->create([
-            'user_id' => $owner->id,
-            'name' => 'テスト1',
-            'post_code' => '1234567',
-            'address' => '東京都渋谷区',
-            ]);
-            Profile::factory()->for($seller)->create([
-            'user_id' => $seller->id,
-            'name' => 'テスト2',
-            'post_code' => '1234123',
-            'address' => '東京都渋谷区',
-            ]);
+            Profile::factory()->for($owner)->create();
+            Profile::factory()->for($seller)->create();
 
             $liked = Product::factory()->for($seller)->create(['title' => 'いいねした商品']);
             $notLiked = Product::factory()->for($seller)->create(['title' => 'いいねしてない商品']);
@@ -48,6 +37,44 @@ class MylistTest extends TestCase
             $response->assertDontSee('いいねしてない商品');
         }
     //購入済み商品は「Sold」と表示される
+        public function test_mylist_shows_sold_label_only_for_sold_products()
+        {
+            $seller = User::factory()->create();
+            $viewer = User::factory()->create();
 
+            Profile::factory()->for($seller)->create();
+            Profile::factory()->for($viewer)->create();
+            $soldProduct = Product::factory()->for($seller)->sold()->create([
+                'title' => 'SOLD商品',
+            ]);
+            $normalProduct = Product::factory()->for($seller)->create([
+                'title' => '通常商品',
+            ]);
+
+            Like::factory()->create([
+                'user_id' => $viewer->id,
+                'product_id' => $soldProduct->id,
+            ]);
+            Like::factory()->create([
+                'user_id' => $viewer->id,
+                'product_id' => $normalProduct->id,
+            ]);
+            $response = $this->actingAs($viewer)->get('/?tab=mylist');
+            $response->assertStatus(200);
+
+            $response->assertSee('SOLD商品');
+            $response->assertSee('通常商品');
+
+            // SOLD商品には SOLD ラベルが出る
+            $response->assertSee('SOLD');
+        }
     //未認証の場合は何も表示されない
+        public function test_guest_sees_nothing_on_mylist_tab()
+        {
+            $response = $this->get('/?tab=mylist');
+            $response->assertOk();
+            $response->assertDontSee('product-card');
+            $response->assertDontSee('SOLD');
+            $response->assertDontSee('マイリストに商品はありません');
+        }
 }

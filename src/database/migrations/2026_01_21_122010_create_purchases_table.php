@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('seller_user_id')->references('id')->on('users')->restrictOnDelete();
             $table->foreignId('product_id')->constrained()->restrictOnDelete();
             $table->foreignId('shipping_address_id')->nullable()->constrained()->restrictOnDelete();
+            $table->string('shipping_post_code', 8)->nullable();
+            $table->string('shipping_address');
+            $table->string('shipping_building')->nullable();
             $table->enum('payment_method',['card','convenience']);
             $table->string('status')->default('pending');
             $table->timestamps();
