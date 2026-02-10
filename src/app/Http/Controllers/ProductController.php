@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Profile;
 use App\Http\Requests\ExhibitionRequest;
 
 class ProductController extends Controller
@@ -59,7 +57,8 @@ class ProductController extends Controller
             $originalName=$request->file('image')->getClientOriginalName(); 
             $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
             }
-            $user->products()->create($data);
+            $product =$user->products()->create($data);
+            $product->categories()->sync($request->categories);
 
         return redirect()
             ->route('mypage')

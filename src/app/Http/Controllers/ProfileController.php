@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ProfileRequest;
-use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -34,7 +32,7 @@ class ProfileController extends Controller
     public function edit(){
         $profile=auth()->user()->profile;
         return view('profile-edit',compact('profile'));
-    } 
+    }
     public function update(ProfileRequest $request)
     {
         $user=Auth::user();
@@ -42,7 +40,7 @@ class ProfileController extends Controller
             'name','post_code','address','building']);
 
         if( $request->file('image')){
-            $originalName=$request->file('image')->getClientOriginalName(); 
+            $originalName=$request->file('image')->getClientOriginalName();
             $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
             }
             $user->profile()->updateOrCreate(

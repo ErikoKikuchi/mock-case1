@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!fileInput || !previewImg) return;
     const allowedTypes = ['image/jpeg', 'image/png'];
     const maxSize = 10 * 1024 * 1024;
-    
+
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files?.[0];
         if (!file) return;
-    
+
         if (!allowedTypes.includes(file.type)) {
             alert('JPEG, PNG形式の画像を選択してください');
         fileInput.value = '';

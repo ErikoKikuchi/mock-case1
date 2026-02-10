@@ -40,7 +40,7 @@ class ProfileRequest extends FormRequest
             ]);
         }
     }
-    
+
     public function rules(): array
     {
         $imageRule = $this->isMethod('patch')

@@ -76,7 +76,7 @@ class PurchaseController extends Controller
         }
 
         //purchases に紐づける
-        $purchase = Purchase::create([
+        Purchase::create([
         'buyer_user_id' => $user->id,
         'seller_user_id' => $product->user_id,
         'product_id' => $product->id,

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\Product;
 use App\Models\Comment;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
 
@@ -13,9 +12,9 @@ class ProductInteractionController extends Controller
 {
     public function toggle(Product $product)
     {
-        $liked = auth()->user()->toggleLike($product->id);
+        auth()->user()->toggleLike($product);
 
-        return redirect()->back();
+        return back();
     }
     public function store(CommentRequest $request,Product $item_id)
     {

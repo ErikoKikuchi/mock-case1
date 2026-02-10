@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Category;
 use App\Models\Purchase;
 use App\Models\Product;
-use Database\Factories\PurchaseFactory;
+use App\Models\User;
+use App\Models\Profile;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -39,13 +41,25 @@ class ProductFactory extends Factory
     }
 
     // Productを作った後に pending purchase を1件作る
-    public function sold(): static
+    public function sold()
     {
         return $this->afterCreating(function ($product) {
-            Purchase::factory()
-                ->pending()
-                ->forProduct($product)
-                ->create();
-        });
+        $buyer = User::factory()->create();
+        $profile = Profile::factory()->for($buyer)->create();
+
+        Purchase::factory()->create([
+            'buyer_user_id'      => $buyer->id,
+            'seller_user_id'     => $product->user_id,
+            'product_id'         => $product->id,
+            'payment_method'     => 'convenience',
+            'status'             => 'pending',
+
+            // 必須カラムを埋める
+            'shipping_post_code' => $profile->post_code,
+            'shipping_address'   => $profile->address,
+            'shipping_building'  => $profile->building,
+            'shipping_address_id'=> null,
+        ]);
+    });
     }
 }

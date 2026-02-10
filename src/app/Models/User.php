@@ -77,9 +77,9 @@ class User extends Authenticatable
         return $this->profile?->isComplete()===true;
     }
     //いいねONOFF
-    public function toggleLike(int $productId):bool
+    public function toggleLike(Product $product):bool
     {
-        $result= $this->likes()->toggle($productId);
+        $result= $this->likes()->toggle($product->id);
         return !empty($result['attached']);
     }
     //いいねがされているか

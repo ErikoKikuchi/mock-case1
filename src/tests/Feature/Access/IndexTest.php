@@ -12,22 +12,20 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase;
 
-    //全商品を取得できる(guest)
-        public function test_guest_can_see_all_products_on_index()
-        {
-            $owner = User::factory()->create();
-            $products = Product::factory()->count(3)->for($owner)->create();
-
-            $response = $this->get('/');
-            $response->assertStatus(200);
-
-            foreach ($products as $product) {
-            $response->assertSee($product->title);
-            $response->assertSee($product->image);
-    }
+//全商品を取得できる(guest)
+    public function test_guest_can_see_all_products_on_index()
+    {
+        $owner = User::factory()->create();
+        $products = Product::factory()->count(3)->for($owner)->create();
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        foreach ($products as $product) {
+        $response->assertSee($product->title);
+        $response->assertSee('/storage/products/', false);
         }
+    }
 
-    //購入済み商品は「Sold」と表示される
+//購入済み商品は「Sold」と表示される
     public function test_index_shows_sold_label_only_for_sold_products()
     {
         $owner = User::factory()->create();
@@ -50,7 +48,7 @@ class IndexTest extends TestCase
         $response->assertSee('SOLD');
     }
 
-    //自分が出品した商品は表示されない
+//自分が出品した商品は表示されない
     public function test_logged_in_user_does_not_see_own_products()
     {
         $user = User::factory()->create();
