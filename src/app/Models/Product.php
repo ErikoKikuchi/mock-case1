@@ -63,7 +63,7 @@ class Product extends Model
     //売り切れかどうか
     public function isSold():bool
     {
-        return $this->purchases()->where('status','pending')->exists();
+        return $this->purchases()->whereIn('status', ['pending', 'paid'])->exists();
     }
 //検索
     public function scopeKeywordSearch($query,$keyword){

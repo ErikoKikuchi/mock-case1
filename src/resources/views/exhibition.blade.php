@@ -11,7 +11,7 @@
     <div class="exhibition">
         <h1 class ="form-title__top">商品の出品</h1>
         <form class="form__inner" action="{{route('exhibition.store')}}" method="POST" enctype="multipart/form-data">
-            @csrf
+        @csrf
             <div class="image">
                 <span class="form-label">商品画像</span>
                 <div class="image__inner">
@@ -80,10 +80,10 @@
                     </div>
                 </div>
                 <div class="error">
-                @foreach($errors->get('condition') as $message)
-                    <p class="error-message">{{$message}}</p>
-                @endforeach
-            </div>
+                    @foreach($errors->get('condition') as $message)
+                        <p class="error-message">{{$message}}</p>
+                    @endforeach
+                </div>
             </div>
             <div class="description">
                 <h2 class="form-title">商品名と説明</h2>

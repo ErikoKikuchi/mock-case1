@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use App\Models\Product;
-use App\Models\Category;
 
 class ProductSearchController extends Controller
 {
@@ -31,13 +30,18 @@ class ProductSearchController extends Controller
             ? collect():Product::keywordSearch($keyword)->get();
             return view('index',compact('products','tab'));
         }
-        //ログイン済、profile未完成のときはprofile-editへ
+        //ログイン済、未認証のときは認証誘導画面へ
+        if (! $user->hasVerifiedEmail()){
+            return redirect()->route('verification.notice');
+        }
+
+        //ログイン済、認証済、profile未完成のときはprofile-editへ
         if(!$user->canViewProductList()){
             return redirect()->route('profile.edit');
         }
         //ログイン済、profile完成済のときは自分の出品商品以外の全商品ページへ,マイリストタブ押したらいいねした商品を表示
         if($tab === 'mylist'){
-        $products =$user 
+        $products =$user
             -> likes()
             ->where('products.user_id', '!=', $user->id)
             ->keywordSearch($keyword)

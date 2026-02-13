@@ -18,7 +18,8 @@ class Purchase extends Model
         'shipping_post_code',
         'shipping_address',
         'shipping_building',
-        'status'
+        'status',
+        'stripe_session_id',
     ];
 
 //他テーブルとの関係

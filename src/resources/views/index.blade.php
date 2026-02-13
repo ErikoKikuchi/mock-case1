@@ -19,9 +19,9 @@
     </div>
     <div class = "product__content">
         @if(session('message'))
-        <div class="message-box">
-            <p class="message">{{session('message')}}</p>
-        </div>
+            <div class="message-box">
+                <p class="message">{{session('message')}}</p>
+            </div>
         @endif
         <div class ="product__list">
             @forelse($products as $product)
@@ -30,8 +30,7 @@
                         <div class="image">
                             <img class="product__image" src="{{Storage::url($product->image)}}" alt="{{$product->title}}">
                         </div>
-                        <p class="product__title">{{ $product->title }}
-                        </p>
+                        <p class="product__title">{{ $product->title }}</p>
                     @if($product->isSold())
                         <span  class="product__sold">SOLD</span>
                     @endif

@@ -22,15 +22,15 @@
             </div>
             <div class="nav">
                 @auth
-                <div class="logout">
-                    <form class="logout__button" action="/logout" method="post">@csrf
-                        <button class="logout__button--submit" type="submit">ログアウト</button>
-                    </form>
-                </div>
+                    <div class="logout">
+                        <form class="logout__button" action="/logout" method="post">@csrf
+                            <button class="logout__button--submit" type="submit">ログアウト</button>
+                        </form>
+                    </div>
                 @else
-                <div class="login">
-                    <a href="/login" class="login__button">ログイン</a>
-                </div>
+                    <div class="login">
+                        <a href="/login" class="login__button">ログイン</a>
+                    </div>
                 @endauth
                 <div class="mypage">
                     <a href="{{ route('mypage') }}" class="mypage__header-link">マイページ</a>

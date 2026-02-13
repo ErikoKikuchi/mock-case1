@@ -20,7 +20,7 @@ class ShippingAddressTest extends TestCase
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
-        $profile =Profile::factory()->for($buyer)->create();
+        Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('shipping_addresses', 0);
         $address =[
@@ -51,7 +51,7 @@ class ShippingAddressTest extends TestCase
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
-        $profile =Profile::factory()->for($buyer)->create();
+        Profile::factory()->for($buyer)->create();
 
         $address =[
             'post_code' => '123-4567',

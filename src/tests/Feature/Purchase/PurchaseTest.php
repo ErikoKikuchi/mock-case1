@@ -7,7 +7,6 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Profile;
-use App\Models\ShippingAddress;
 
 class PurchaseTest extends TestCase
 {
@@ -49,7 +48,7 @@ class PurchaseTest extends TestCase
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
-        $profile =Profile::factory()->for($buyer)->create();
+        Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('purchases', 0);
 
@@ -72,7 +71,7 @@ class PurchaseTest extends TestCase
         $product = Product::factory()->for($seller)->create(['title'=>'テスト商品']);
 
         $buyer = User::factory()->create();
-        $profile =Profile::factory()->for($buyer)->create();
+        Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('purchases', 0);
 

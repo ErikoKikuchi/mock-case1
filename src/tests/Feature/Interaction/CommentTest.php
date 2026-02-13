@@ -28,7 +28,7 @@ class CommentTest extends TestCase
         $response = $this->actingAs($commentUser)->post(
             route('comment', $product),$payload
         )->assertRedirect();
-        $response->assertSessionHasNoErrors(); 
+        $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('comments', [
             'user_id' => $commentUser->id,
@@ -47,57 +47,48 @@ class CommentTest extends TestCase
 
 //ログイン前のユーザーはコメントを送信できない
     public function test_before_login_user_cannot_send_comment()
-        {
-            $user = User::factory()->create();
-            $product=Product::factory()->for($user)->create();
-
-            $this->assertDatabaseCount('comments', 0);
-
-            $payload = ['body' => 'テストコメント'];
-            $response = $this->post(
-                route('comment', $product),$payload);
-
-            $response->assertRedirect(route('login'));
-
-            $this->assertDatabaseCount('comments', 0);
-        }
+    {
+        $user = User::factory()->create();
+        $product=Product::factory()->for($user)->create();
+        $this->assertDatabaseCount('comments', 0);
+        $payload = ['body' => 'テストコメント'];
+        $response = $this->post(
+            route('comment', $product),$payload);
+        $response->assertRedirect(route('login'));
+        $this->assertDatabaseCount('comments', 0);
+    }
 
 //コメントが入力されていない場合、バリデーションメッセージが表示される
     public function test_sending_comment_requires_body()
-        {
-            $user = User::factory()->create();
-            $product=Product::factory()->for($user)->create();
-
-            $commentUser = User::factory()->create();
-            Profile::factory()->for($commentUser)->create();
-
-            $this->assertDatabaseCount('comments', 0);
-
-            $response = $this->actingAs($commentUser)->post(
-                route('comment', $product), ['body' => '']
-            )->assertRedirect();
-            $response->assertSessionHasErrors([
-                'body'=>'コメントを入力してください'
-            ]);
-            $this->assertDatabaseCount('comments', 0);
-        }
+    {
+        $user = User::factory()->create();
+        $product=Product::factory()->for($user)->create();
+        $commentUser = User::factory()->create();
+        Profile::factory()->for($commentUser)->create();
+        $this->assertDatabaseCount('comments', 0);
+        $response = $this->actingAs($commentUser)->post(
+            route('comment', $product), ['body' => '']
+        )->assertRedirect();
+        $response->assertSessionHasErrors([
+            'body'=>'コメントを入力してください'
+        ]);
+        $this->assertDatabaseCount('comments', 0);
+    }
 
 //コメントが255字以上の場合、バリデーションメッセージが表示される
     public function test_comment_body_over_255_shows_validation_message()
-        {
-            $user = User::factory()->create();
-            $product=Product::factory()->for($user)->create();
-
-            $commentUser = User::factory()->create();
-            Profile::factory()->for($commentUser)->create();
-
-            $tooLong = str_repeat('あ', 256);
-            $response = $this->actingAs($commentUser)->post(
-                route('comment', $product), ['body' => $tooLong]
-            )->assertRedirect();
-            $response->assertSessionHasErrors([
-                'body'=>'コメントは２５５文字以内で入力してください'
-            ]);
-        }
+    {
+        $user = User::factory()->create();
+        $product=Product::factory()->for($user)->create();
+        $commentUser = User::factory()->create();
+        Profile::factory()->for($commentUser)->create();
+        $tooLong = str_repeat('あ', 256);
+        $response = $this->actingAs($commentUser)->post(
+            route('comment', $product), ['body' => $tooLong]
+        )->assertRedirect();
+        $response->assertSessionHasErrors([
+            'body'=>'コメントは２５５文字以内で入力してください'
+        ]);
+    }
 
 }

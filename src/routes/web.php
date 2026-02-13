@@ -6,10 +6,14 @@ use App\Http\Controllers\ProductInteractionController;
 use App\Http\Controllers\ProductSearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+
 
 Route::get('/',[ProductSearchController::class,'show'])->name('home');
 Route::get('/item/{item_id}',[ProductController::class,'show'])->name('item.detail');
+Route::get('/purchase/success', [PurchaseController::class, 'success'])
+        ->name('purchase.success');
 
 
 Route::middleware('guest')->group(function(){
@@ -18,6 +22,19 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
+    Route::get('/email/verify', function () {return view('auth.verify-email');
+    })->name('verification.notice');
+    Route::get('/redirect', function () {return redirect()->away('https://mailtrap.io/');}) ->name('verification.open');
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back();
+    })->middleware('throttle:6,1')->name('verification.send');
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();return redirect()->route('profile.edit');
+    })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage',[ProductController::class,'index'])->name('mypage');
     Route::get('/mypage/profile',[ProfileController::class,'edit'])->name('profile.edit');
     Route::get('/sell',[ProductController::class,'create'])->name('sell');

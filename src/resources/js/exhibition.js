@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const reader = new FileReader();
         reader.onload = (e) => {
-            previewImg.src = e.target.result; 
+            previewImg.src = e.target.result;
             previewImg.classList.remove('is-hidden');
         };
         reader.readAsDataURL(file);

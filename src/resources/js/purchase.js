@@ -11,6 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedOption = select.options[select.selectedIndex];
         const labelHtml = '<p class="label">支払方法</p>';
         display.innerHTML = labelHtml + '<p>' + selectedOption.text + '</p>';
-});
-
+    });
 });

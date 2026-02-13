@@ -27,7 +27,7 @@ class AddressRequest extends FormRequest
             // 全角 → 半角（数字）
             $postal = mb_convert_kana($postal, 'n');
 
-            // ハイフン類を除去（全角ハイフンも含めたいなら後述）
+            // ハイフン類を除去
             $postal = str_replace(['-', '−', 'ー', '―'], '', $postal);
 
             // 7桁なら 123-4567 に整形

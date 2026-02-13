@@ -26,7 +26,6 @@ class LoginRequest extends FormRequest
                 'required',
                 'string',
                 'email',
-                //'.Auth::user()->email.'
                 ],
             'password'=>['required','min:8','string'],
         ];

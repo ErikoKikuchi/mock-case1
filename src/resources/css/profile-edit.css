@@ -107,16 +107,16 @@
     margin-bottom: 50px;
 }
 @media(max-width: 850px){
-.profile__form{
-    max-width: 100%;
-    padding: 0 16px;
-}
-.input-box{
-    height: 56px;
-}
+    .profile__form{
+        max-width: 100%;
+        padding: 0 16px;
+    }
+    .input-box{
+        height: 56px;
+    }
 }
 @media(max-width:767px){
-.image__inner{
-    flex-direction: column;
-}
+    .image__inner{
+        flex-direction: column;
+    }
 }

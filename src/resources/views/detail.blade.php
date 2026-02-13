@@ -54,7 +54,7 @@
                     <h3 class="form-label">カテゴリー</h3>
                     <div class="category__information">
                         @foreach($product->categories as $category)
-                        <p class="category__detail">{{$category->name}}</p>
+                            <p class="category__detail">{{$category->name}}</p>
                         @endforeach
                     </div>
                 </div>
@@ -73,32 +73,32 @@
             </div>
             <div class="product__comment">
                 @forelse($product->comments as $comment)
-                <div class="commenter__name">
-                    <div class="image-input">
-                        <img class="icon" src="{{Storage::url($comment->user?->profile?->image)}}" alt="ユーザーアイコン">
+                    <div class="commenter__name">
+                        <div class="image-input">
+                            <img class="icon" src="{{Storage::url($comment->user?->profile?->image)}}" alt="ユーザーアイコン">
+                        </div>
+                        <span class="name">
+                            {{ $comment->user?->profile?->name ?? '退会ユーザー' }}
+                        </span>
                     </div>
-                    <span class="name">
-                        {{ $comment->user?->profile?->name ?? '退会ユーザー' }}
-                    </span>
-                </div>
-                <div class="comment__inner">
-                    <p class="comment__body">
-                    {{ $comment->body }}
-                    </p>
-                </div>
+                    <div class="comment__inner">
+                        <p class="comment__body">
+                            {{ $comment->body }}
+                        </p>
+                    </div>
                 @empty
-                <div class="comment__inner">
-                    <p class="comment-alert">コメントがありません</p>
-                </div>
+                    <div class="comment__inner">
+                        <p class="comment-alert">コメントがありません</p>
+                    </div>
                 @endforelse
                 <h3 class="new__comment">商品へのコメント</h3>
                 <form class="comment__input" action="{{route('comment',$product->id)}}" method="post">@csrf
                     <textarea name="body" id="body" class="textarea__input"></textarea>
                     <div class="error">
-                    @foreach($errors->get('body') as $message)
-                        <p class="error-message">{{$message}}</p>
-                    @endforeach
-                </div>
+                        @foreach($errors->get('body') as $message)
+                            <p class="error-message">{{$message}}</p>
+                        @endforeach
+                    </div>
                     <button class="send__comment" type="submit">コメントを送信する</button>
                 </form>
             </div>

@@ -59,11 +59,11 @@
     margin-bottom: 50px;
 }
 @media(max-width: 850px){
-.shipping-address__form{
-    max-width: 100%;
-    padding: 0 16px;
-}
-.input-box{
-    height: 56px;
-}
+    .shipping-address__form{
+        max-width: 100%;
+        padding: 0 16px;
+    }
+    .input-box{
+        height: 56px;
+    }
 }

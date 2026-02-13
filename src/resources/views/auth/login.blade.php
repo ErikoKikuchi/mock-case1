@@ -54,7 +54,7 @@
                     </div>
                 </form>
                 <div class="register">
-                        <a class="register-link" href="/register">会員登録はこちら</a>
+                    <a class="register-link" href="/register">会員登録はこちら</a>
                 </div>
             </div>
         </div>

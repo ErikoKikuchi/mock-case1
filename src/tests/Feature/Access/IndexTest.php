@@ -29,12 +29,12 @@ class IndexTest extends TestCase
     public function test_index_shows_sold_label_only_for_sold_products()
     {
         $owner = User::factory()->create();
-        $soldProduct = Product::factory()->for($owner)->sold()->create([
+        Product::factory()->for($owner)->sold()->create([
             'title' => 'SOLD商品',
         ]);
 
         $other = User::factory()->create();
-        $normalProduct = Product::factory()->for($other)->create([
+        Product::factory()->for($other)->create([
             'title' => '通常商品',
         ]);
 

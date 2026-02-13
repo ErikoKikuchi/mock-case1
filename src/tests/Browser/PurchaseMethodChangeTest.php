@@ -25,7 +25,7 @@ class PurchaseMethodChangeTest extends DuskTestCase
 
                 // プルダウンで「カード支払い」を選択
                 ->select('#payment_method_select', 'card')
-                ->pause(200) 
+                ->pause(200)
 
                 ->assertSee('カード支払い');
         });

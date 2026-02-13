@@ -54,7 +54,7 @@ class ProductController extends Controller
         ];
 
         if( $request->file('image')){
-            $originalName=$request->file('image')->getClientOriginalName(); 
+            $originalName=$request->file('image')->getClientOriginalName();
             $data['image'] =$request->file('image')->storeAs('images', $originalName,'public');
             }
             $product =$user->products()->create($data);

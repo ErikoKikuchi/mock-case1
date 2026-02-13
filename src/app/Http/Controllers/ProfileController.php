@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 
 class ProfileController extends Controller
@@ -23,11 +24,11 @@ class ProfileController extends Controller
         ]);
         return $user;
         });
-        //メール認証を後で実装
-        //event(new Registered($user));
+        //メール認証
+        event(new Registered($user));
         //自動ログイン
         auth()->login($user);
-        return redirect()->intended(route('home'));
+        return redirect()->route('verification.notice');
     }
     public function edit(){
         $profile=auth()->user()->profile;

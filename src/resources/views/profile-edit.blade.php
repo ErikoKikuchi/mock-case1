@@ -16,7 +16,7 @@
     <div class="profile__form">
         <h1 class ="form-title">プロフィール設定</h1>
         <form class="form__inner" action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
-            @method('PATCH')@csrf
+        @method('PATCH')@csrf
             <div class="image">
                 <div class="image__inner">
                     <div class="current-image">

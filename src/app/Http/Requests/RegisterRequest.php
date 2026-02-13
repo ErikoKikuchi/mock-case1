@@ -31,7 +31,6 @@ class RegisterRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                //'.Auth::user()->email.'
                 ],
             'password'=>['required','min:8','string'],
             'password_confirmation'=>['required','min:8','same:password'],

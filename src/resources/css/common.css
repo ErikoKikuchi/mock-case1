@@ -1,5 +1,5 @@
 .header{
-    background-color: black; 
+    background-color: black;
 }
 .header__inner {
     max-width: 1320px;
@@ -66,11 +66,11 @@
     background-color: white;
 }
 @media (max-width: 850px) {
-.header__inner{
-    flex-wrap: wrap;
-    height:auto;
-    padding:10px;
-  }
+    .header__inner{
+        flex-wrap: wrap;
+        height:auto;
+        padding:10px;
+    }
 .header__title {
     order: 1;
 }

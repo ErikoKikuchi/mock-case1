@@ -31,7 +31,7 @@
                             </div>
                             <div class="error">
                                 @foreach($errors->get('name') as $message)
-                                <p class="error-message">{{$message}}</p>
+                                    <p class="error-message">{{$message}}</p>
                                 @endforeach
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="error">
                                 @foreach($errors->get('email') as $message)
-                                <p class="error-message">{{$message}}</p>
+                                    <p class="error-message">{{$message}}</p>
                                 @endforeach
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="error">
                                 @error('password')
-                                <p class="error-message">{{$message}}</p>
+                                    <p class="error-message">{{$message}}</p>
                                 @enderror
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="error">
                                 @error('password_confirmation')
-                                <p class="error-message">{{$message}}</p>
+                                    <p class="error-message">{{$message}}</p>
                                 @enderror
                             </div>
                         </div>

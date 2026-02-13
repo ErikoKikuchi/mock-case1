@@ -38,7 +38,7 @@
         </div>
         <div class="middle-row">
             <form id="purchase-form" method="post" action="{{ route('purchase.store') }}" class="purchase-form">
-                @csrf
+            @csrf
                 <div class="payment-select">
                     <label class="payment-method__inner" for="payment__method">支払い方法</label>
                     <select class="payment-method__select" name="payment_method" id="payment_method_select">
@@ -54,9 +54,9 @@
                 </div>
                 <div class="purchase-button">
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    @if($shippingAddress)
-                        <input type="hidden" name="shipping_address_id" value="{{ $shippingAddress->id }}">
-                    @endif
+                        @if($shippingAddress)
+                            <input type="hidden" name="shipping_address_id" value="{{ $shippingAddress->id }}">
+                        @endif
                     <button class="purchase-button__submit" type="submit">購入する</button>
                 </div>
             </form>
@@ -83,7 +83,6 @@
                         <p class ="address-information">{{$profile->address}}</p>
                         <p class ="address-information">{{$profile->building}}</p>
                     @endif
-                    </p>
                 </div>
             </div>
             <div class="empty"></div>

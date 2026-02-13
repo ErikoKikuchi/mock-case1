@@ -7,9 +7,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Profile;
-use App\Models\ShippingAddress;
 use App\Models\Purchase;
-use Illuminate\Support\Facades\Storage;
 
 class UserTest extends TestCase
 {
@@ -25,7 +23,7 @@ class UserTest extends TestCase
 
         $user = User::factory()->create();
         $profile = Profile::factory()->for($user)->create();
-        $normalProduct = Product::factory()->for($user)->create([
+        Product::factory()->for($user)->create([
                     'title' => '出品商品',
                 ]);
 
