@@ -19,6 +19,7 @@ class LikeTest extends TestCase
         $user = User::factory()->create();
         $product=Product::factory()->for($user)->create();
         $likeUser = User::factory()->create();
+        $likeUser->markEmailAsVerified();
         Profile::factory()->for($likeUser)->create();
         $this->assertDatabaseCount('likes', 0);
         $response = $this->actingAs($likeUser)->post(
@@ -41,6 +42,7 @@ class LikeTest extends TestCase
         $user = User::factory()->create();
         $product=Product::factory()->for($user)->create();
         $likeUser = User::factory()->create();
+        $likeUser->markEmailAsVerified();
         Profile::factory()->for($likeUser)->create();
         Like::factory()->create([
             'user_id' => $likeUser->id,
@@ -58,6 +60,7 @@ class LikeTest extends TestCase
         $user = User::factory()->create();
         $product=Product::factory()->for($user)->create();
         $likeUser = User::factory()->create();
+        $likeUser->markEmailAsVerified();
         Profile::factory()->for($likeUser)->create();
         Like::factory()->create([
             'user_id' => $likeUser->id,

@@ -16,15 +16,17 @@ class PurchaseTest extends TestCase
     public function test_login_user_can_purchase_product()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
+        $buyer->markEmailAsVerified();
         $profile =Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('purchases', 0);
 
         $response = $this->actingAs($buyer)->post(route('purchase.store'), [
-            'payment_method' => 'card',
+            'payment_method' => 'convenience',
             'product_id' => $product->id]);
 
         $response->assertRedirect(route('home'));
@@ -36,7 +38,7 @@ class PurchaseTest extends TestCase
         'shipping_post_code' => $profile->post_code,
         'shipping_address' => $profile->address,
         'shipping_building' => $profile->building,
-        'payment_method' => 'card',
+        'payment_method' => 'convenience',
         'status' => 'pending',
         ]);
     }
@@ -45,15 +47,17 @@ class PurchaseTest extends TestCase
     public function test_purchase_product_has_sold_label_at_index()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
+        $buyer->markEmailAsVerified();
         Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('purchases', 0);
 
         $response = $this->actingAs($buyer)->post(route('purchase.store'), [
-            'payment_method' => 'card',
+            'payment_method' => 'convenience',
             'product_id' => $product->id]);
 
         $response->assertRedirect(route('home'));
@@ -68,15 +72,17 @@ class PurchaseTest extends TestCase
     public function test_purchase_product_can_see_at_mypage_has_purchased_tab()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product = Product::factory()->for($seller)->create(['title'=>'テスト商品']);
 
         $buyer = User::factory()->create();
+        $buyer->markEmailAsVerified();
         Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('purchases', 0);
 
         $response = $this->actingAs($buyer)->post(route('purchase.store'), [
-            'payment_method' => 'card',
+            'payment_method' => 'convenience',
             'product_id' => $product->id]);
 
         $response->assertRedirect(route('home'));

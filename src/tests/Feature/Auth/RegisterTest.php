@@ -81,7 +81,7 @@ class RegisterTest extends TestCase
             'password_confirmation'=>'パスワードと一致しません',
             ]);
     }
-//全ての項目が入力されている場合、会員情報が登録され、プロフィール設定画面に遷移される
+//全ての項目が入力されている場合、会員情報が登録される。応用要件（メール認証）実装したため、登録後のプロフィール遷移は別テストで担保。
     public function test_user_can_register_with_valid_credentials()
     {
         $data = [
@@ -90,15 +90,12 @@ class RegisterTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
         ];
-        $response = $this
+        $this
         ->from('/register')
         ->post('/register', $data);
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
             'email' => 'testuser@example.com',
         ]);
-        $response->assertRedirect('/');
-        $next = $this->get('/');
-        $next->assertRedirect('/mypage/profile');
     }
 }

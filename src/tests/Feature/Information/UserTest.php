@@ -17,11 +17,13 @@ class UserTest extends TestCase
     public function test_user_can_see_profile_page()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product=Product::factory()->for($seller)->create([
                     'title' => '購入商品',
                 ]);
 
         $user = User::factory()->create();
+        $user->markEmailAsVerified();
         $profile = Profile::factory()->for($user)->create();
         Product::factory()->for($user)->create([
                     'title' => '出品商品',

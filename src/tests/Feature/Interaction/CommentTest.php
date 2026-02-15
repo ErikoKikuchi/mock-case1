@@ -16,9 +16,11 @@ class CommentTest extends TestCase
     public function test_login_user_can_send_comment()
     {
         $user = User::factory()->create();
+        $user->markEmailAsVerified();
         $product=Product::factory()->for($user)->create();
 
         $commentUser = User::factory()->create();
+        $commentUser->markEmailAsVerified();
         Profile::factory()->for($commentUser)->create();
 
         $this->assertDatabaseCount('comments', 0);
@@ -64,6 +66,7 @@ class CommentTest extends TestCase
         $user = User::factory()->create();
         $product=Product::factory()->for($user)->create();
         $commentUser = User::factory()->create();
+        $commentUser->markEmailAsVerified();
         Profile::factory()->for($commentUser)->create();
         $this->assertDatabaseCount('comments', 0);
         $response = $this->actingAs($commentUser)->post(
@@ -81,6 +84,7 @@ class CommentTest extends TestCase
         $user = User::factory()->create();
         $product=Product::factory()->for($user)->create();
         $commentUser = User::factory()->create();
+        $commentUser->markEmailAsVerified();
         Profile::factory()->for($commentUser)->create();
         $tooLong = str_repeat('あ', 256);
         $response = $this->actingAs($commentUser)->post(

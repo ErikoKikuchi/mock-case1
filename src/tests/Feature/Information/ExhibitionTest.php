@@ -21,6 +21,7 @@ class ExhibitionTest extends TestCase
         Storage::fake('public');
 
         $user = User::factory()->create();
+        $user->markEmailAsVerified();
         Profile::factory()->for($user)->create();
 
         $category = Category::factory()->create();

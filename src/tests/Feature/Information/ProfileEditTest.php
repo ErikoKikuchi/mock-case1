@@ -16,6 +16,7 @@ class ProfileEditTest extends TestCase
     public function test_user_can_see_profile()
     {
         $user = User::factory()->create();
+        $user->markEmailAsVerified();
         $profile=Profile::factory()->for($user)->create();
 
         $response = $this->actingAs($user)->get(route('profile.edit'));

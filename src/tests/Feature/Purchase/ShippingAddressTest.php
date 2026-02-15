@@ -17,9 +17,11 @@ class ShippingAddressTest extends TestCase
     public function test_buyer_shipping_address_is_reflected_on_purchase_page()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
+        $buyer->markEmailAsVerified();
         Profile::factory()->for($buyer)->create();
 
         $this->assertDatabaseCount('shipping_addresses', 0);
@@ -48,9 +50,11 @@ class ShippingAddressTest extends TestCase
     public function test_buyer_shipping_address_is_reflected_on_purchased_product()
     {
         $seller = User::factory()->create();
+        $seller->markEmailAsVerified();
         $product = Product::factory()->for($seller)->create();
 
         $buyer = User::factory()->create();
+        $buyer->markEmailAsVerified();
         Profile::factory()->for($buyer)->create();
 
         $address =[
@@ -69,7 +73,7 @@ class ShippingAddressTest extends TestCase
             route('purchase.store'),
             [
                 'product_id'      => $product->id,
-                'payment_method'  => 'card',
+                'payment_method'  => 'convenience',
                 'shipping_address_id' => $shippingAddress->id,
             ]
         );
@@ -83,7 +87,7 @@ class ShippingAddressTest extends TestCase
             'shipping_post_code' => '123-4567',
             'shipping_address'=>'東京都',
             'shipping_building'=>'テストマンション3階',
-            'payment_method' => 'card',
+            'payment_method' => 'convenience',
             'status' => 'pending',
         ]);
     }

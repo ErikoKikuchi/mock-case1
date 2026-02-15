@@ -18,6 +18,8 @@ class MylistTest extends TestCase
     {
         $owner = User::factory()->create();
         $seller = User::factory()->create();
+        $owner->markEmailAsVerified();
+        $seller->markEmailAsVerified();
         Profile::factory()->for($owner)->create();
         Profile::factory()->for($seller)->create();
         $liked = Product::factory()->for($seller)->create(['title' => 'いいねした商品']);
@@ -35,6 +37,8 @@ class MylistTest extends TestCase
     {
         $seller = User::factory()->create();
         $viewer = User::factory()->create();
+        $seller->markEmailAsVerified();
+        $viewer->markEmailAsVerified();
         Profile::factory()->for($seller)->create();
         Profile::factory()->for($viewer)->create();
         $soldProduct = Product::factory()->for($seller)->sold()->create([
