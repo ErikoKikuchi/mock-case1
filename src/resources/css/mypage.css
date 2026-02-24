@@ -98,14 +98,14 @@
     font-weight: bold;
 }
 @media (max-width: 1200px){
-.mypage-container{
-    grid-template-columns: repeat(3, minmax(250px,1fr));
+    .mypage-container{
+        grid-template-columns: repeat(3, minmax(250px,1fr));
+        }
+    .user-information{
+        display: flex;
+        flex-direction: column;
+        gap:16px;
     }
-.user-information{
-    display: flex;
-    flex-direction: column;
-    gap:16px;
-}
 }
 @media(max-width: 850px){
     .mypage-container{

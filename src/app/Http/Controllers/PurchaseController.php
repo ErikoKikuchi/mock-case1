@@ -46,7 +46,7 @@ class PurchaseController extends Controller
         'product' => $product,
         'selectedPayment' => $selectedPayment,
         'profile' => $user?->profile,
-        'shippingAddress' => $shippingAddress, 
+        'shippingAddress' => $shippingAddress,
         ]);
     }
     public function edit($item_id)
@@ -170,7 +170,7 @@ class PurchaseController extends Controller
         $product = Product::findOrFail($item_id);
 
         $shipping = ShippingAddress::updateOrCreate(
-        ['user_id' => $user->id, 'product_id' => $product->id], 
+        ['user_id' => $user->id, 'product_id' => $product->id],
         [
             'post_code' => $request->post_code,
             'address' => $request->address,

@@ -68,7 +68,7 @@ class ProfileRequest extends FormRequest
             'image.max'=>'画像は最大１０Ｍまでのものを使用してください',
             'post_code.required'=> '郵便番号を入力してください',
             'post_code.string'=> '郵便番号を正しく入力してください',
-            'post_code.regex'=> '郵便番号は数字で入力してください',
+            'post_code.regex'=> '郵便番号は7桁の数字で入力してください',
             'address.required'=> '住所を入力してください',
             'address.string'=> '住所を正しく入力してください',
             'building.string'=> '建物名を正しく入力してください',

@@ -28,12 +28,6 @@ class ProfilesSeeder extends Seeder
             'address' => '東京都千代田区丸の内1-9-1',
             'image' => 'images/東京駅.jpg'
         ],
-        [
-            'name' => 'テスト 次郎',
-            'post_code' => '100-0014',
-            'address' => '東京都千代田区永田町1丁目7-1',
-            'image' => 'images/国会議事堂.jpg'
-        ],
     ];
 
         foreach ($profiles as $data) {

@@ -9,6 +9,7 @@ use App\Models\User;
 
 class ProductsSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Run the database seeds.
      */
