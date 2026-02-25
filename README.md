@@ -90,7 +90,7 @@ cd src このプロジェクトではviteを使用しています。テスト実
 - composer require --dev laravel/dusk
 - php artisan dusk:install
 - cp .env.example .env.dusk.local（APP_ENV=local, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, VITE_DISABLED=true）  
-- php artisan key:generate  
+- php artisan key:generate --env=dusk.local  
 - apt-get update  
 - apt-get install -y chromium chromium-driver  
 - chromium --version  
