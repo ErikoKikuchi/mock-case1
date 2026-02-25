@@ -36,37 +36,6 @@
 - vite.config.js で build.outDir を設定,app.jsに読み込むファイルを設定  
 - npm run dev(開発環境のため)  
   
-## テスト用には下記の通り環境構築  
-- mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  
-- config/database.phpの修正（'database' => 'demo_test','username' => 'root','password' => 'root'）  
-- cp .env .env.testingを用意（APP_ENV=test, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root）  
-- php artisan key:generate  
-- php artisan migrate --env=testing  
-- phpunit.xmlの編集（server name="DB_CONNECTION" value="mysql_test"/, server name="DB_DATABASE" value="demo_test"/）  
-- php artisan storage:link  
-cd src このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。  
-
-## E2Eテスト（Laravel Dusk）について  
-- 本プロジェクトでは、JavaScript による画面反映を伴う要件についてLaravel Dusk を用いた E2E テストを実装しています。
-- composer require --dev laravel/dusk
-- php artisan dusk:install
-- cp .env.example .env.dusk.local（APP_ENV=local, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, VITE_DISABLED=true）  
-- php artisan key:generate  
-- apt-get update  
-- apt-get install -y chromium chromium-driver  
-- chromium --version  
-- chromedriver --version(※chromium --versionとメジャーバージョンが一致していることが必須です。)  
-- Dusk は vendor/laravel/dusk/bin/ 配下の driver を使用するため、ブラウザと同じバージョンを指定して再取得します  
-- php artisan dusk:chrome-driver 144（※ Chromium 144 系を使用している場合）  
-- Docker 環境では sandbox 制限があるため、tests/DuskTestCase.php に以下のオプションを追加します。  
-- '--no-sandbox','--disable-dev-shm-usage',＊$options = (new ChromeOptions)->addArguments下の配列に追加  
-- config/app.phpに以下を追加 'vite_disabled' => env('VITE_DISABLED', false),  
-- php artisan config:clear  
-- ブレードではfeaturetestと同様にviteを読み込まないように設定済  
-- php artisan serve --host=0.0.0.0 --port=8000  
-- curl -I http://localhost:8000  
-- php artisan dusk  
-  
 ## 開発環境  
 - 初期登録画面（http://localhost/register）  
 - (画面フロー：初期登録→メール認証→プロフィール登録→商品一覧)  
@@ -107,6 +76,37 @@ cd src このプロジェクトではviteを使用しています。テスト実
 - その後設定反映を実行　php artisan config:clear  
 また今回は要件の仕様により直接個人のアカウントに接続してありますが、エラーになると思われますので、実際に使用する際には個人で登録し、.envに設定してあるURLを変更して使用してください。  
   
+## テスト用には下記の通り環境構築  
+- mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  
+- config/database.phpの修正（'database' => 'demo_test','username' => 'root','password' => 'root'）  
+- cp .env .env.testingを用意（APP_ENV=test, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root）  
+- php artisan key:generate  
+- php artisan migrate --env=testing  
+- phpunit.xmlの編集（server name="DB_CONNECTION" value="mysql_test"/, server name="DB_DATABASE" value="demo_test"/）  
+- php artisan storage:link  
+cd src このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。  
+
+## E2Eテスト（Laravel Dusk）について  
+- 本プロジェクトでは、JavaScript による画面反映を伴う要件についてLaravel Dusk を用いた E2E テストを実装しています。
+- composer require --dev laravel/dusk
+- php artisan dusk:install
+- cp .env.example .env.dusk.local（APP_ENV=local, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, VITE_DISABLED=true）  
+- php artisan key:generate  
+- apt-get update  
+- apt-get install -y chromium chromium-driver  
+- chromium --version  
+- chromedriver --version(※chromium --versionとメジャーバージョンが一致していることが必須です。)  
+- Dusk は vendor/laravel/dusk/bin/ 配下の driver を使用するため、ブラウザと同じバージョンを指定して再取得します  
+- php artisan dusk:chrome-driver 144（※ Chromium 144 系を使用している場合）  
+- Docker 環境では sandbox 制限があるため、tests/DuskTestCase.php に以下のオプションを追加します。  
+- '--no-sandbox','--disable-dev-shm-usage',＊$options = (new ChromeOptions)->addArguments下の配列に追加  
+- config/app.phpに以下を追加 'vite_disabled' => env('VITE_DISABLED', false),  
+- php artisan config:clear  
+- ブレードではfeaturetestと同様にviteを読み込まないように設定済  
+- php artisan serve --host=0.0.0.0 --port=8000  
+- curl -I http://localhost:8000  
+- php artisan dusk  
+
 ## 使用技術(実行環境)  
 - php:8.3-fpm  
 - Laravel:12.44.0  
