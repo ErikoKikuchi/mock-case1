@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    @if(!app()->environment('testing'))
+    @if(!app()->environment(['testing','dusk.local']) && !config('app.vite_disabled'))
         @vite('resources/js/profile-edit.js')
     @endif
 @endsection

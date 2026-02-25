@@ -41,7 +41,7 @@ class MailTest extends TestCase
 //メール認証誘導画面で「認証はこちらから」ボタンを押下するとメール認証サイトに遷移する
     public function test_when_pushed_verified_button_move_email_site()
     {
-        config(['app.mail_verify_provider_url' => 'https://mailtrap.io/']);
+        config('app.mail_verify_provider_url');
         $data = [
             'name' => 'Test User',
             'email' => 'testuser@example.com',

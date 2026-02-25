@@ -5,7 +5,17 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.js'],
+            input: ['resources/js/app.js',
+        'resources/js/index.js',
+        'resources/js/login.js',
+        'resources/js/register.js',
+        'resources/js/address.js',
+        'resources/js/profile-edit.js',
+        'resources/js/detail.js',
+        'resources/js/mypage.js',
+        'resources/js/purchase.js',
+        'resources/js/exhibition.js',
+        'resources/js/verify-email.js',],
             refresh: true,
         }),
         tailwindcss(),
@@ -16,7 +26,7 @@ export default defineConfig({
         },
     },
     build:{
-        outDir: '../public/build',
+        outDir: 'public/build',
         emptyOutDir:true,
     },
 });

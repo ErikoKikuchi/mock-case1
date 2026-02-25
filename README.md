@@ -29,12 +29,12 @@
 - php artisan migrate  
 - php artisan db:seed  
 - php artisan storage:link  
-- このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。Node.js / npm のインストールおよび `npm install` はホスト環境で行ってください。(package.jsonはsrcディレクトリにあります。)  
+- このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。Node.js / npm のインストールおよび `npm install` はホスト環境（srcディレクトリ）で行ってください。(package.jsonはsrcディレクトリにあります。)  
 - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -  
 - sudo apt-get install -y nodejs  
 - npm install  
-- vite.config.js で build.outDir を設定,app.jsに読み込むファイルを設定  
-- npm run dev(開発環境のため)  
+- vite.config.js で build.outDir を設定（vite.config.jsからの相対パス）,app.jsに読み込むファイルを設定  
+- npm run dev(開発環境のため、srcディレクトリで実施)  
   
 ## stripe決済について
 - このプロジェクトではカード払いに際してStripeCheckoutを利用しています。  
@@ -78,11 +78,12 @@
 ## テスト用には下記の通り環境構築  
 - mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  
 - config/database.phpの修正（'database' => 'demo_test','username' => 'root','password' => 'root'）  
-- cp .env .env.testingを用意（APP_ENV=test, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root）  
+- cp .env .env.testingを用意（APP_ENV=test, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, MAILTRAP_SANDBOX_URL=https://example.test/）  
 - php artisan key:generate --env=testing  
 - php artisan migrate --env=testing  
 - phpunit.xmlの編集（env name="DB_CONNECTION" value="mysql_test"/, env name="DB_DATABASE" value="demo_test"/）  
 - php artisan storage:link  
+- php artisan test
 cd src このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。  
 
 ## E2Eテスト（Laravel Dusk）について  
@@ -96,13 +97,14 @@ cd src このプロジェクトではviteを使用しています。テスト実
 - chromium --version  
 - chromedriver --version(※chromium --versionとメジャーバージョンが一致していることが必須です。)  
 - Dusk は vendor/laravel/dusk/bin/ 配下の driver を使用するため、ブラウザと同じバージョンを指定して再取得します  
-- php artisan dusk:chrome-driver 144（※ Chromium 144 系を使用している場合）  
+- php artisan dusk:chrome-driver 144（※ chromium --version で確認したメジャーバージョンを指定）  
 - Docker 環境では sandbox 制限があるため、tests/DuskTestCase.php に以下のオプションを追加します。  
 - '--no-sandbox','--disable-dev-shm-usage',＊$options = (new ChromeOptions)->addArguments下の配列に追加  
 - config/app.phpに以下を追加 'vite_disabled' => env('VITE_DISABLED', false),  
 - php artisan config:clear  
+- npm run build(cd src にて)  
 - ブレードではfeaturetestと同様にviteを読み込まないように設定済  
-- php artisan serve --host=0.0.0.0 --port=8000  
+- php artisan serve --host=0.0.0.0 --port=8000(別のターミナルで行う)  
 - curl -I http://localhost:8000  
 - php artisan dusk  
 

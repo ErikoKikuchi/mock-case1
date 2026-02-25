@@ -123,5 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
     'vite_disabled' => env('VITE_DISABLED', false),
-
+    'mail_verify_provider_url' => env('MAILTRAP_SANDBOX_URL'),
 ];
