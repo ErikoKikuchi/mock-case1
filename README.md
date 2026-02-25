@@ -48,7 +48,7 @@
   
 ## メール認証について
 - 本アプリでは、開発環境におけるメール送信確認のためにMailtrap の Email Sandbox を使用しています。  
-- .env に下記の設定してください。  
+- 要件仕様により Mailtrap を利用していますが、リポジトリには個人の認証情報は含まれていません。クローン後にメール機能を使用する場合は、各自で Mailtrap アカウントを作成し、.env に下記の設定してください。  
 - MAIL_MAILER=smtp  
 - MAIL_HOST=sandbox.smtp.mailtrap.io  
 - MAIL_PORT=2525  
@@ -58,7 +58,6 @@
 - MAIL_FROM_NAME="${APP_NAME}"  
 - MAILTRAP_SANDBOX_URL=個人URL  
 - その後設定反映を実行　php artisan config:clear  
-また今回は要件の仕様により直接個人のアカウントに接続してありますが、エラーになると思われますので、実際に使用する際には個人で登録し、.envに設定してあるURLを変更して使用してください。  
   
 ## 開発環境  
 - 初期登録画面（http://localhost/register）  
