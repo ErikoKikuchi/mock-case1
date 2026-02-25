@@ -103,7 +103,9 @@ cd src このプロジェクトではviteを使用しています。テスト実
 - MAIL_PASSWORD=（MailtrapのPASSWORD）  
 - MAIL_FROM_ADDRESS="hello@example.com"  
 - MAIL_FROM_NAME="${APP_NAME}"  
+- MAILTRAP_SANDBOX_URL=個人URL  
 - その後設定反映を実行　php artisan config:clear  
+また今回は要件の仕様により直接個人のアカウントに接続してありますが、エラーになると思われますので、実際に使用する際には個人で登録し、.envに設定してあるURLを変更して使用してください。  
   
 ## 使用技術(実行環境)  
 - php:8.3-fpm  

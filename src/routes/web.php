@@ -24,7 +24,7 @@ Route::middleware('guest')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/email/verify', function () {return view('auth.verify-email');
     })->name('verification.notice');
-    Route::get('/redirect', function () {return redirect()->away('https://mailtrap.io/');}) ->name('verification.open');
+    Route::get('/redirect', function () {return redirect()->away(config('services.mailtrap.sandbox_url'));}) ->name('verification.open');
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         return back();
