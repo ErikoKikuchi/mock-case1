@@ -89,7 +89,7 @@ cd src このプロジェクトではviteを使用しています。テスト実
 - 本プロジェクトでは、JavaScript による画面反映を伴う要件についてLaravel Dusk を用いた E2E テストを実装しています。
 - composer require --dev laravel/dusk
 - php artisan dusk:install
-- cp .env.example .env.dusk.local（APP_ENV=local, APP_KEY=  , DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, VITE_DISABLED=true）  
+- cp .env.example .env.dusk.local（APP_ENV=local, APP_KEY=  , DB_CONNECTION=mysql_test, DB_HOST=mysql, DB_DATABASE=demo_test, DB_USERNAME=root, DB_PASSWORD=root, VITE_DISABLED=true）  
 - php artisan key:generate --env=dusk.local  
 - apt-get update  
 - apt-get install -y chromium chromium-driver  
