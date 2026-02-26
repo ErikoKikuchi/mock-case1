@@ -7,9 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!select || !display) return;
 
-    select.addEventListener('change', function() {
+
+    select.addEventListener('change', function () {
+
         const selectedOption = select.options[select.selectedIndex];
+        const paymentMethod = select.value;
+
         const labelHtml = '<p class="label">支払方法</p>';
-        display.innerHTML = labelHtml + '<p>' + selectedOption.text + '</p>';
+        display.innerHTML = labelHtml + '<p class="method">' + selectedOption.text + '</p>';
+
+        if (!paymentMethod) return;
+
+        const itemId = select.dataset.itemId;
+        const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+
+        fetch(`/purchase/${itemId}/payment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfMeta ? csrfMeta.getAttribute('content') : '',
+            },
+            body: JSON.stringify({ payment_method: paymentMethod }),
+        })
     });
 });

@@ -46,5 +46,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/create/shipping-address/{item_id}',[PurchaseController::class, 'create'])->name('create.shipping-address');
     Route::patch('/update/profile',[ProfileController::class,'update'])->name('profile.update');
     Route::post('/exhibition',[ProductController::class,'store'])->name('exhibition.store');
+    Route::post('/purchase/{item_id}/payment',[PurchaseController::class, 'updatePayment'])->name('purchase.updatePayment');
 });
 

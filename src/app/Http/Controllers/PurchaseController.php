@@ -33,7 +33,7 @@ class PurchaseController extends Controller
                 ->route('home',$product)
                 ->with('message','この商品は売り切れです');
             }
-        $selectedPayment=session('selected_payment', null);
+        $selectedPayment = session("selected_payment_{$item_id}",null);
         $user?->profile;
         $shippingAddress = null;
         if ($request->filled('shipping_address_id')) {
@@ -118,6 +118,7 @@ class PurchaseController extends Controller
                 'payment_method' => $request->payment_method,
                 'status' => 'pending',
                 ]);
+            session()->forget("selected_payment_{$product->id}");
             return redirect()
             ->route('home')
             ->with('message', 'コンビニでお支払いください');
@@ -161,6 +162,7 @@ class PurchaseController extends Controller
                 'stripe_session_id' => $sessionId,
             ]);
     }
+    session()->forget("selected_payment_{$product->id}");
     return redirect()->route('home');
     }
 
@@ -181,5 +183,15 @@ class PurchaseController extends Controller
             'item_id' => $product->id,
             'shipping_address_id' => $shipping->id,
             ]);
+    }
+    public function updatePayment(Request $request, $item_id)
+    {
+    $request->validate([
+        'payment_method' => ['required', 'in:card,convenience']
+    ]);
+
+    session(["selected_payment_{$item_id}" => $request->payment_method]);
+
+    return response()->json(['status' => 'ok']);
     }
 }

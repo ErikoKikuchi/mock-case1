@@ -32,7 +32,15 @@
                 </div>
                 <div class="selected-payment__inner" id="selected_payment_display">
                     <p class="label">支払方法</p>
-                    <p class="method">{{ $selectedPayment ?? '支払い方法を選択してください' }}</p>
+                    <p class="method">
+                        @if($selectedPayment === 'card')
+                            カード支払い
+                        @elseif($selectedPayment === 'convenience')
+                            コンビニ払い
+                        @else
+                            支払い方法を選択してください
+                        @endif
+                    </p>
                 </div>
             </div>
         </div>
@@ -41,7 +49,7 @@
             @csrf
                 <div class="payment-select">
                     <label class="payment-method__inner" for="payment__method">支払い方法</label>
-                    <select class="payment-method__select" name="payment_method" id="payment_method_select">
+                    <select class="payment-method__select" name="payment_method" id="payment_method_select" data-item-id="{{ $product->id }}">
                         <option value="">選択してください</option>
                         <option value="convenience" @selected(old('payment_method', $selectedPayment) === 'convenience')>コンビニ払い</option>
                         <option value="card" @selected(old('payment_method', $selectedPayment) === 'card')>カード支払い</option>
